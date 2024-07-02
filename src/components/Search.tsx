@@ -10,9 +10,7 @@ interface SearchState {
 }
 
 class Search extends Component<SearchProps, SearchState> {
-  state: SearchState = {
-    searchTerm: localStorage.getItem("searchTerm") || "",
-  };
+  state: SearchState = { searchTerm: localStorage.getItem("searchTerm") || "" };
 
   handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     this.setState({ searchTerm: event.target.value });
@@ -28,12 +26,15 @@ class Search extends Component<SearchProps, SearchState> {
     return (
       <div className={styles.search}>
         <input
+          className={styles.searchInput}
           type="text"
           placeholder="Search for a Star Wars character..."
           value={this.state.searchTerm}
           onChange={this.handleInputChange}
         />
-        <button onClick={this.handleSearch}>Search</button>
+        <button className={styles.searchButton} onClick={this.handleSearch}>
+          Search
+        </button>
       </div>
     );
   }
