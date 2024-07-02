@@ -31,3 +31,9 @@
 .resultText {
   color: #777;
 }
+
+.noResult {
+  font-size: 30px;
+  text-align: center;
+  color: #621335;
+}
