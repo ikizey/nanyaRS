@@ -15,7 +15,7 @@
 ## Scripts
 - **Start the development server:**
     ```bash
-    npm start
+    npm run dev
 
 - **Build the project:** 
     ```bash
