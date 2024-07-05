@@ -1,26 +1,13 @@
-import { Component } from "react";
 import styles from "./ErrorFallback.module.css";
 
-interface ErrorFallbackProps {
-  onReset: () => void;
+export default function ErrorFallback({ onReset }: { onReset: () => void }) {
+  return (
+    <div className={styles.errorFallback}>
+      <p className={styles.errorMessage}>Something went wrong!</p>
+      <p className={styles.errorMessage}>We're working on fixing it.</p>
+      <button className={styles.resetButton} onClick={onReset}>
+        Try Again
+      </button>
+    </div>
+  );
 }
-
-class ErrorFallback extends Component<ErrorFallbackProps> {
-  handleClose = () => {
-    this.props.onReset();
-  };
-
-  render() {
-    return (
-      <div className={styles.errorFallback}>
-        <p className={styles.errorMessage}>Something went wrong!</p>
-        <p className={styles.errorMessage}>We're working on fixing it.</p>
-        <button className={styles.resetButton} onClick={this.handleClose}>
-          Try Again
-        </button>
-      </div>
-    );
-  }
-}
-
-export default ErrorFallback;
