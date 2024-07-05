@@ -1,29 +1,18 @@
-import { Component } from "react";
 import { Character } from "../types/character";
 import styles from "./Results.module.css";
 
-interface ResultsProps {
-  results: Character[];
+export default function Results({ results }: { results: Character[] }) {
+  return results.length > 0 ? (
+    <ul className={styles.resultsList}>
+      {results.map((result) => (
+        <li className={styles.resultItem} key={result.name}>
+          <h4 className={styles.resultHeader}>{result.name}</h4>
+          <p className={styles.resultText}>{result.gender}</p>
+          <p className={styles.resultText}>{result.url}</p>
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <div className={styles.noResult}>No characters found</div>
+  );
 }
-
-class Results extends Component<ResultsProps> {
-  render() {
-    if (this.props.results.length > 0) {
-      return (
-        <ul className={styles.resultsList}>
-          {this.props.results.map((result) => (
-            <li className={styles.resultItem} key={result.name}>
-              <h4 className={styles.resultHeader}>{result.name}</h4>
-              <p className={styles.resultText}>{result.gender}</p>
-              <p className={styles.resultText}>{result.url}</p>
-            </li>
-          ))}
-        </ul>
-      );
-    } else {
-      return <div className={styles.noResult}>No characters found</div>;
-    }
-  }
-}
-
-export default Results;
