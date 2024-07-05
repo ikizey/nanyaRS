@@ -11,6 +11,6 @@ module.exports = {
   plugins: ["react-compiler", "@typescript-eslint"],
   rules: {
     "@typescript-eslint/no-explicit-any": "error",
-    "react-compiler/react-compiler": "error"
+    "react-compiler/react-compiler": "error",
   },
 };
