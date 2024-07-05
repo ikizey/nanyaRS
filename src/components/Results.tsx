@@ -16,9 +16,9 @@ class Results extends Component<ResultsProps> {
     if (this.props.results.length > 0) {
       return (
         <ul className={styles.resultsList}>
-          {this.props.results.map((result, index) => (
-            <li className={styles.resultItem} key={index}>
-              <h2 className={styles.resultHeader}>{result.name}</h2>
+          {this.props.results.map((result) => (
+            <li className={styles.resultItem} key={result.name}>
+              <h4 className={styles.resultHeader}>{result.name}</h4>
               <p className={styles.resultText}>{result.gender}</p>
               <p className={styles.resultText}>{result.url}</p>
             </li>
