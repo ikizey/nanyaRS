@@ -3,11 +3,12 @@ import Search from "./components/Search";
 import Results from "./components/Results";
 import TestErrorButton from "./components/TestErrorButton";
 import { fetchStarWarsCharacters } from "./api/starWarsAPI";
+import { Character } from "./types/character";
 import Loading from "./components/Loading";
 import styles from "./App.module.css";
 
 interface AppState {
-  results: { name: string; gender: string; url: string }[];
+  results: Character[];
   loading: boolean;
 }
 

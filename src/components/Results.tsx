@@ -1,14 +1,9 @@
 import { Component } from "react";
+import { Character } from "../types/character";
 import styles from "./Results.module.css";
 
-interface Result {
-  name: string;
-  gender: string;
-  url: string;
-}
-
 interface ResultsProps {
-  results: Result[];
+  results: Character[];
 }
 
 class Results extends Component<ResultsProps> {

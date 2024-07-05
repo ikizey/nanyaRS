@@ -1,4 +1,8 @@
-export const fetchStarWarsCharacters = async (searchTerm: string) => {
+import { Character } from "../types/character";
+
+export async function fetchStarWarsCharacters(
+  searchTerm: string,
+): Promise<Character[]> {
   const url = searchTerm
     ? `https://swapi.dev/api/people/?search=${searchTerm}`
     : "https://swapi.dev/api/people/?page=1";
@@ -14,4 +18,4 @@ export const fetchStarWarsCharacters = async (searchTerm: string) => {
       gender: item.gender,
       url: item.url,
     }));
-};
+}
