@@ -1,7 +1,6 @@
-import { Component, ErrorInfo, ReactNode } from "react";
+import { Component, ErrorInfo } from "react";
 
 interface ErrorBoundaryProps {
-  children: ReactNode;
   fallback: React.ComponentType<{ onReset: () => void }>;
 }
 
@@ -29,8 +28,6 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
       const FallbackComponent = this.props.fallback;
       return <FallbackComponent onReset={this.resetError} />;
     }
-
-    return this.props.children;
   }
 }
 
