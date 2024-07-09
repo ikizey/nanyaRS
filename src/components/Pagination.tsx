@@ -1,6 +1,5 @@
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./Pagination.module.css";
-import { ResultsLoaderData } from "../loaders/resultsLoader";
 
 export default function Pagination({
   page,
@@ -12,8 +11,9 @@ export default function Pagination({
   onChange: () => void;
 }) {
   const pages = Array.from(Array(maxPage).keys()).map((number) => number + 1);
-  const { searchTerm } = useLoaderData() as ResultsLoaderData;
-  const search = searchTerm || "";
+  const location = useLocation();
+  const urlSearchParams = new URLSearchParams(location.search);
+  const { search } = Object.fromEntries(urlSearchParams);
   const navigate = useNavigate();
 
   return (
