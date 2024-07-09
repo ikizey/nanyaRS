@@ -6,7 +6,7 @@ import CharacterDetails from "../components/CharacterDetails";
 import { loader as searchLoader } from "../loaders/resultsLoader";
 import { loader as characterDetailsLoader } from "../loaders/characterDetailsLoader";
 
-export const router = createBrowserRouter([
+export const routes = [
   {
     path: "/",
     element: <Root />,
@@ -18,10 +18,12 @@ export const router = createBrowserRouter([
         element: <CharacterDetails />,
         loader: characterDetailsLoader,
       },
-      {
-        path: "*",
-        element: <NotFound />,
-      },
     ],
   },
-]);
+  {
+    path: "*",
+    element: <NotFound />,
+  },
+];
+
+export const router = createBrowserRouter(routes);
