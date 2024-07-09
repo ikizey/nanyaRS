@@ -3,7 +3,6 @@ import { Await, useLoaderData } from "react-router-dom";
 import useDetails from "../hooks/useDetails";
 import Search from "../components/Search";
 import Results from "../components/Results";
-import TestErrorButton from "../components/TestErrorButton";
 import Loading from "../components/Loading";
 import Pagination from "../components/Pagination";
 import { ResultsLoaderData } from "../loaders/resultsLoader";
@@ -68,9 +67,6 @@ export default function SearchBar() {
           />
         </React.Suspense>
       </footer>
-      <div className={styles.topRight}>
-        <TestErrorButton />
-      </div>
     </div>
   );
 }
