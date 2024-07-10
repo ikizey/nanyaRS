@@ -7,18 +7,22 @@ expect.extend(matchers);
 
 afterEach(() => {
   cleanup();
-  vi.restoreAllMocks();
 });
 
-global.fetch = vi.fn().mockImplementation((url: string) => {
-  if (url.startsWith("https://swapi.dev/api/people/1")) {
-    return Promise.resolve({
-      json: () => Promise.resolve(mockCharacter),
-    });
-  } else if (url.startsWith("https://swapi.dev/api/people/")) {
-    return Promise.resolve({
-      json: () => Promise.resolve(mockCharactersResults),
-    });
-  }
-  return Promise.reject(new Error("Not Found"));
+global.fetch = vi.fn().mockImplementation((url: URL) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      if (url.href.includes("https://swapi.dev/api/people/1")) {
+        resolve({
+          json: () => Promise.resolve(mockCharacter),
+        });
+      } else if (url.href.startsWith("https://swapi.dev/api/people/")) {
+        resolve({
+          json: () => Promise.resolve(mockCharactersResults),
+        });
+      } else {
+        resolve(Promise.reject(new Error("Not Found")));
+      }
+    }, 200); // 200ms delay to simulate network latency
+  });
 });
