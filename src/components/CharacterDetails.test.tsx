@@ -29,15 +29,28 @@ describe("CharacterDetails Component", () => {
       expect(
         screen.getByRole("heading", { name: /Luke Skywalker/i, level: 2 }),
       ).toBeInTheDocument();
-      expect(screen.getByText(`male`)).toBeInTheDocument();
-      expect(screen.getByText(`172`)).toBeInTheDocument();
-      expect(screen.getByText(`77`)).toBeInTheDocument();
-      expect(screen.getByText(`blond`)).toBeInTheDocument();
-      expect(screen.getByText(`fair`)).toBeInTheDocument();
-      expect(screen.getByText(`blue`)).toBeInTheDocument();
-      expect(screen.getByText(`19BBY`)).toBeInTheDocument();
+      expect(screen.getByText("male")).toBeInTheDocument();
+      expect(screen.getByText("172")).toBeInTheDocument();
+      expect(screen.getByText("77")).toBeInTheDocument();
+      expect(screen.getByText("blond")).toBeInTheDocument();
+      expect(screen.getByText("fair")).toBeInTheDocument();
+      expect(screen.getByText("blue")).toBeInTheDocument();
+      expect(screen.getByText("19BBY")).toBeInTheDocument();
       expect(screen.getByText("Homeworld:")).toBeInTheDocument();
       expect(screen.getByText("URL:")).toBeInTheDocument();
+    });
+  });
+
+  it('displays "character not found" for non existing character', async () => {
+    const router = createMemoryRouter(routes, {
+      initialEntries: ["/details/12345"],
+      initialIndex: 1,
+    });
+
+    render(<RouterProvider router={router} />);
+
+    await waitFor(() => {
+      expect(screen.getByText("Character not found")).toBeInTheDocument();
     });
   });
 

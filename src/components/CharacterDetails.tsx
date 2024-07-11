@@ -17,46 +17,51 @@ export default function CharacterDetails() {
   return (
     <React.Suspense fallback={<Loading />}>
       <Await resolve={character}>
-        {(character) => (
-          <div className={styles.details}>
-            <button
-              className={styles.closeButton}
-              onClick={() => {
-                navigate(`/${location.search}`);
-              }}
-            >
-              x
-            </button>
-            <h2 className={styles.header}>{character.name}</h2>
-            <p className={styles.detailItem}>
-              <strong>Gender:</strong> {character.gender}
-            </p>
-            <p className={styles.detailItem}>
-              <strong>Height:</strong> {character.height}
-            </p>
-            <p className={styles.detailItem}>
-              <strong>Mass:</strong> {character.mass}
-            </p>
-            <p className={styles.detailItem}>
-              <strong>Hair Color:</strong> {character.hair_color}
-            </p>
-            <p className={styles.detailItem}>
-              <strong>Skin Color:</strong> {character.skin_color}
-            </p>
-            <p className={styles.detailItem}>
-              <strong>Eye Color:</strong> {character.eye_color}
-            </p>
-            <p className={styles.detailItem}>
-              <strong>Birth Year:</strong> {character.birth_year}
-            </p>
-            <p className={styles.detailItem}>
-              <strong>Homeworld:</strong> <a href={character.homeworld}>Link</a>
-            </p>
-            <p className={styles.detailItem}>
-              <strong>URL:</strong> {character.url}
-            </p>
-          </div>
-        )}
+        {(character) =>
+          typeof character.name !== "undefined" ? (
+            <div className={styles.details}>
+              <button
+                className={styles.closeButton}
+                onClick={() => {
+                  navigate(`/${location.search}`);
+                }}
+              >
+                x
+              </button>
+              <h2 className={styles.header}>{character.name}</h2>
+              <p className={styles.detailItem}>
+                <strong>Gender:</strong> {character.gender}
+              </p>
+              <p className={styles.detailItem}>
+                <strong>Height:</strong> {character.height}
+              </p>
+              <p className={styles.detailItem}>
+                <strong>Mass:</strong> {character.mass}
+              </p>
+              <p className={styles.detailItem}>
+                <strong>Hair Color:</strong> {character.hair_color}
+              </p>
+              <p className={styles.detailItem}>
+                <strong>Skin Color:</strong> {character.skin_color}
+              </p>
+              <p className={styles.detailItem}>
+                <strong>Eye Color:</strong> {character.eye_color}
+              </p>
+              <p className={styles.detailItem}>
+                <strong>Birth Year:</strong> {character.birth_year}
+              </p>
+              <p className={styles.detailItem}>
+                <strong>Homeworld:</strong>{" "}
+                <a href={character.homeworld}>Link</a>
+              </p>
+              <p className={styles.detailItem}>
+                <strong>URL:</strong> {character.url}
+              </p>
+            </div>
+          ) : (
+            <div>Character not found</div>
+          )
+        }
       </Await>
     </React.Suspense>
   );
