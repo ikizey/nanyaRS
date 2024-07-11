@@ -49,7 +49,7 @@ describe("Results", () => {
   it("renders a Luke and Darth characters with relevant data", () => {
     render(<Results results={mockCharacters} />, { wrapper: BrowserRouter });
     const Luke = screen.getByText(mockCharacters[0].name);
-    const Father = screen.getByText(mockCharacters[0].name);
+    const Father = screen.getByText(mockCharacters[1].name);
     expect(Luke).toBeInTheDocument();
     expect(Father).toBeInTheDocument();
   });
