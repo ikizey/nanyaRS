@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import useDetails from "../hooks/useDetails";
-import SearchBar from "./SearchBar";
+import SearchBar from "../components/SearchBar";
 import styles from "./Root.module.css";
 
 export default function Root() {

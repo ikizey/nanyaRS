@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Await, useLoaderData } from "react-router-dom";
 import useDetails from "../hooks/useDetails";
-import Search from "../components/Search";
-import Results from "../components/Results";
-import Loading from "../components/Loading";
-import Pagination from "../components/Pagination";
+import Search from "./Search";
+import Results from "./Results";
+import Loading from "./Loading";
+import Pagination from "./Pagination";
 import { ResultsLoaderData } from "../loaders/resultsLoader";
 import styles from "./SearchBar.module.css";
 
