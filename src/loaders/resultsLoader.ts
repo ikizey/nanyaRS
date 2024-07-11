@@ -14,7 +14,9 @@ export interface ResultsLoaderData {
 
 export async function loader(fnArgs: LoaderFunctionArgs) {
   const characters = fetchStarWarsCharacters(fnArgs);
-  const { search, page } = Object.fromEntries(getSearchParams(fnArgs.request));
+  const { search, page = "1" } = Object.fromEntries(
+    getSearchParams(fnArgs.request),
+  );
 
   return defer({ characters, search, page });
 }
