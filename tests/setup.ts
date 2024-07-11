@@ -12,7 +12,11 @@ afterEach(() => {
 global.fetch = vi.fn().mockImplementation((url: URL) => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      if (url.href.includes("https://swapi.dev/api/people/1")) {
+      if (url.href.includes("https://swapi.dev/api/people/12345")) {
+        resolve({
+          json: () => Promise.resolve({ detail: "Not found" }),
+        });
+      } else if (url.href.includes("https://swapi.dev/api/people/1")) {
         resolve({
           json: () => Promise.resolve(mockCharacter),
         });
@@ -23,6 +27,6 @@ global.fetch = vi.fn().mockImplementation((url: URL) => {
       } else {
         resolve(Promise.reject(new Error("Not Found")));
       }
-    }, 200); // 200ms delay to simulate network latency
+    }, 200);
   });
 });
