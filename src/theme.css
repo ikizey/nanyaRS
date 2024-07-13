@@ -1,0 +1,48 @@
+:root {
+  --black: #1e1e2e;
+  --white: #ffffff;
+  --light-yellow: #fff0d3;
+  --yellow: #f9e2af;
+  --light-blue: #a3c5fa;
+  --blue: #89b4fa;
+  --light-red: #f9a2af;
+  --red: #f38ba8;
+  --gray-dark: #313244;
+  --gray-light: #b8b8b8;
+
+  --background-color-light: var(--white);
+  --text-color-light: var(--black);
+  --primary-color-light: var(--blue);
+  --secondary-color-light: var(--red);
+  --shadow-color-light: var(--gray-dark);
+  --hover-primary-color-light: var(--light-blue);
+  --hover-secondary-color-light: var(--light-red);
+
+  --background-color-dark: var(--black);
+  --text-color-dark: var(--white);
+  --primary-color-dark: var(--yellow);
+  --secondary-color-dark: var(--red);
+  --shadow-color-dark: var(--gray-light);
+  --hover-primary-color-dark: var(--light-yellow);
+  --hover-secondary-color-dark: var(--light-red);
+}
+
+body.light {
+  --background-color: var(--background-color-light);
+  --text-color: var(--text-color-light);
+  --primary-color: var(--primary-color-light);
+  --secondary-color: var(--secondary-color-light);
+  --shadow-color: var(--shadow-color-light);
+  --hover-primary-color: var(--hover-primary-color-light);
+  --hover-secondary-color: var(--hover-secondary-color-light);
+}
+
+body.dark {
+  --background-color: var(--background-color-dark);
+  --text-color: var(--text-color-dark);
+  --primary-color: var(--primary-color-dark);
+  --secondary-color: var(--secondary-color-dark);
+  --shadow-color: var(--shadow-color-dark);
+  --hover-primary-color: var(--hover-primary-color-dark);
+  --hover-secondary-color: var(--hover-secondary-color-dark);
+}

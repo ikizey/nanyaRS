@@ -4,18 +4,12 @@
 
 .pageItem {
   padding: 8px 12px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--shadow-color);
   cursor: pointer;
 }
 
 .activePageItem {
-  background-color: #ddd;
+  background-color: var(--shadow-color);
+  color: var(--primary-color);
   font-weight: bold;
-}
-
-.pagination::after {
-  content: attr(data-page) "/" attr(data-max-page);
-  margin-left: auto;
-  font-style: italic;
-  color: #aaa;
 }
