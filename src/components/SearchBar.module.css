@@ -1,0 +1,29 @@
+.appContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin: 0px 24px;
+}
+
+.topRight {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.resultsSection {
+  flex-grow: 1;
+}
+.sectionHeader {
+  padding: 24px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  color: #333;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 24px;
+}

@@ -1,0 +1,21 @@
+.pagination {
+  display: flex;
+}
+
+.pageItem {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.activePageItem {
+  background-color: #ddd;
+  font-weight: bold;
+}
+
+.pagination::after {
+  content: attr(data-page) "/" attr(data-max-page);
+  margin-left: auto;
+  font-style: italic;
+  color: #aaa;
+}
