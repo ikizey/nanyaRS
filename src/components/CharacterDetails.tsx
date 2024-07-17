@@ -1,15 +1,15 @@
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Loading from "./Loading";
 import styles from "./CharacterDetails.module.css";
 import { starWarsApi } from "../features/starWarsApi/starWarsSlice";
+import useDetails from "../hooks/useDetails";
 
 export default function CharacterDetails() {
   const { id } = useParams<{ id: string }>();
   const { data: character, isLoading } = starWarsApi.useGetCharacterByIdQuery(
     id!,
   );
-  const navigate = useNavigate();
-  const location = useLocation();
+  const { closeDetails } = useDetails();
 
   if (isLoading) {
     return <Loading />;
@@ -21,12 +21,7 @@ export default function CharacterDetails() {
 
   return (
     <div className={styles.details}>
-      <button
-        className={styles.closeButton}
-        onClick={() => {
-          navigate(`/${location.search}`);
-        }}
-      >
+      <button className={styles.closeButton} onClick={closeDetails}>
         x
       </button>
       <h2 className={styles.header}>{character.name}</h2>
