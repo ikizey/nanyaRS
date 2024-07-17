@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { BrowserRouter } from "react-router-dom";
@@ -49,6 +49,14 @@ const mockCharacters: Character[] = [
 ];
 
 describe("Results", () => {
+  beforeEach(() => {
+    global.URL.createObjectURL = vi.fn(() => "blob:http://localhost/test-blob");
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   const setup = (results = mockCharacters) => {
     return render(
       <Provider store={store}>

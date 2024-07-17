@@ -23,3 +23,21 @@
     margin-left: 10px;
   }
 }
+
+.downloadButton {
+  border: none;
+  background-color: var(--primary-color);
+  color: var(--text-color-light);
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-left: 10px;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.downloadButton:hover {
+  background-color: var(--hover-primary-color);
+  color: var(--text-color-light);
+}

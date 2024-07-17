@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { BrowserRouter } from "react-router-dom";
@@ -52,6 +52,11 @@ const mockCharacters: Character[] = [
 describe("Flyout", () => {
   beforeEach(() => {
     store.dispatch(unselectAllItems());
+    global.URL.createObjectURL = vi.fn(() => "blob:http://localhost/test-blob");
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
   });
 
   const setup = () => {
@@ -125,5 +130,23 @@ describe("Flyout", () => {
     await waitFor(() => {
       expect(screen.queryByText(/items selected/i)).not.toBeInTheDocument();
     });
+  });
+
+  it("downloads the selected items as a CSV file", async () => {
+    const user = userEvent.setup();
+    setup();
+
+    const checkboxes = screen.getAllByRole("checkbox");
+
+    await user.click(checkboxes[0]);
+    await user.click(checkboxes[1]);
+    await waitFor(() => {
+      expect(screen.getByText(/2 items selected/i)).toBeInTheDocument();
+    });
+
+    const downloadButton = screen.getByText(/download/i);
+
+    expect(downloadButton).toHaveAttribute("href");
+    expect(downloadButton).toHaveAttribute("download", "2_characters.csv");
   });
 });
