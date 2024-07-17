@@ -7,6 +7,7 @@ import {
   addItem,
   removeItem,
 } from "../features/selectedItems/selectedItemsSlice";
+import Flyout from "./Flyout";
 
 export default function Results({ results }: { results: Character[] }) {
   const dispatch = useDispatch();
@@ -28,29 +29,34 @@ export default function Results({ results }: { results: Character[] }) {
     }
   };
 
-  return results?.length > 0 ? (
-    <ul className={styles.resultsList}>
-      {results.map((character) => (
-        <li
-          className={styles.resultItem}
-          key={character.name}
-          onClick={() => {
-            const id = character.url.split("/").filter(Boolean).pop();
-            openDetails(id);
-          }}
-        >
-          <input
-            type="checkbox"
-            className={styles.checkbox}
-            checked={isSelected(character)}
-            onChange={() => handleCheckboxChange(character)}
-            onClick={(e) => e.stopPropagation()}
-          />
-          <h4 className={styles.resultHeader}>{character.name}</h4>
-        </li>
-      ))}
-    </ul>
-  ) : (
-    <div className={styles.noResult}>No characters found</div>
+  return (
+    <>
+      <ul className={styles.resultsList}>
+        {results?.length > 0 ? (
+          results.map((character) => (
+            <li
+              className={styles.resultItem}
+              key={character.name}
+              onClick={() => {
+                const id = character.url.split("/").filter(Boolean).pop();
+                openDetails(id);
+              }}
+            >
+              <input
+                type="checkbox"
+                className={styles.checkbox}
+                checked={isSelected(character)}
+                onChange={() => handleCheckboxChange(character)}
+                onClick={(e) => e.stopPropagation()}
+              />
+              <h4 className={styles.resultHeader}>{character.name}</h4>
+            </li>
+          ))
+        ) : (
+          <div className={styles.noResult}>No characters found</div>
+        )}
+      </ul>
+      <Flyout />
+    </>
   );
 }
