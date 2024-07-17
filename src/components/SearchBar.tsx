@@ -1,27 +1,32 @@
-import React, { useEffect, useState } from "react";
-import { Await, useLoaderData } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import useDetails from "../hooks/useDetails";
 import Search from "./Search";
 import Results from "./Results";
 import Loading from "./Loading";
 import Pagination from "./Pagination";
-import { ResultsLoaderData } from "../loaders/resultsLoader";
 import styles from "./SearchBar.module.css";
+import { starWarsApi } from "../features/starWarsApi/starWarsSlice";
+
+function getMaxPage(count?: number) {
+  if (!count) {
+    return 1;
+  }
+  const CHARACTERS_PER_PAGE = 10;
+  return Math.ceil(count / CHARACTERS_PER_PAGE);
+}
 
 export default function SearchBar() {
-  const { characters, page } = useLoaderData() as ResultsLoaderData;
-  const [isLoading, setIsLoading] = useState(true);
+  const search = useLocation().search;
+  const { data, isLoading } = starWarsApi.useGetCharactersQuery(search);
+
+  const queryParams = new URLSearchParams(search);
+  const page = queryParams.get("page") || "1";
+
+  const results = data ? data.results : [];
+  const maxPage = getMaxPage(data?.count);
+
   const { closeDetails } = useDetails();
   const { isDetailsPanelOpen } = useDetails();
-
-  useEffect(() => {
-    const waitForCharacters = async () => {
-      await Promise.all([characters]);
-      setIsLoading(false);
-    };
-
-    waitForCharacters();
-  }, [characters]);
 
   return (
     <div className={styles.appContainer} onClick={closeDetails}>
@@ -29,43 +34,17 @@ export default function SearchBar() {
         <h2 className={styles.sectionHeader}>
           Search for a Star Wars characters
         </h2>
-        <Search
-          onChange={() => {
-            setIsLoading(true);
-          }}
-        />
+        <Search />
       </section>
       <section className={styles.resultsSection}>
         <h2 className={styles.sectionHeader}>Search Results:</h2>
-        {isLoading ? (
-          <Loading />
-        ) : (
-          <React.Suspense fallback={<Loading />}>
-            <Await
-              resolve={characters}
-              children={({ results }) => <Results results={results} />}
-            />
-          </React.Suspense>
-        )}
+        {isLoading ? <Loading /> : <Results results={results} />}
       </section>
 
       <footer className={styles.footer}>
-        <React.Suspense fallback={<Loading />}>
-          <Await
-            resolve={characters}
-            children={({ maxPage }) =>
-              maxPage && !isDetailsPanelOpen ? (
-                <Pagination
-                  page={page}
-                  maxPage={maxPage}
-                  onChange={() => {
-                    setIsLoading(true);
-                  }}
-                />
-              ) : null
-            }
-          />
-        </React.Suspense>
+        {maxPage && !isDetailsPanelOpen ? (
+          <Pagination page={page} maxPage={maxPage} />
+        ) : null}
       </footer>
     </div>
   );

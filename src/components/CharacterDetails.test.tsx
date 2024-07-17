@@ -22,7 +22,8 @@ describe("CharacterDetails Component", () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByText("Loading...")).toBeInTheDocument();
+      const loaders = screen.getAllByText("Loading...");
+      expect(loaders.length).toBeGreaterThan(0);
     });
     await waitFor(() => {
       expect(screen.queryByText("Loading...")).toBeNull();

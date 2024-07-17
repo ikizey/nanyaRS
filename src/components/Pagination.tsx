@@ -4,11 +4,9 @@ import styles from "./Pagination.module.css";
 export default function Pagination({
   page,
   maxPage,
-  onChange,
 }: {
   page: string;
   maxPage: number;
-  onChange: () => void;
 }) {
   const pages = Array.from(Array(maxPage).keys()).map((number) => number + 1);
   const location = useLocation();
@@ -23,7 +21,6 @@ export default function Pagination({
           key={pageNum}
           className={`${styles.pageItem} ${pageNum.toString() === page ? styles.activePageItem : ""}`}
           onClick={() => {
-            onChange();
             navigate(`/?search=${search || ""}&page=${pageNum.toString()}`);
           }}
         >

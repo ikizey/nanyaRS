@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useSearchTerm from "../hooks/useSearchTerm";
 import styles from "./Search.module.css";
 
-export default function Search({ onChange }: { onChange: () => void }) {
+export default function Search() {
   const { searchTerm, setSearchTerm, saveSearchTerm } = useSearchTerm();
   const navigate = useNavigate();
 
@@ -22,7 +22,6 @@ export default function Search({ onChange }: { onChange: () => void }) {
         className={styles.searchButton}
         onClick={() => {
           saveSearchTerm(searchTerm);
-          onChange();
           navigate(`?search=${searchTerm}`);
         }}
       >
