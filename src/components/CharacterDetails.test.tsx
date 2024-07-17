@@ -2,6 +2,9 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
 import { routes } from "../routes/router";
+import { Provider } from "react-redux";
+import { store } from "../store";
+import { ThemeProvider } from "../context/ThemeContext";
 
 describe("CharacterDetails Component", () => {
   it("displays loading indicator while fetching data", async () => {
@@ -10,10 +13,19 @@ describe("CharacterDetails Component", () => {
       initialIndex: 1,
     });
 
-    render(<RouterProvider router={router} />);
+    render(
+      <Provider store={store}>
+        <ThemeProvider>
+          <RouterProvider router={router} />
+        </ThemeProvider>
+      </Provider>,
+    );
 
     await waitFor(() => {
       expect(screen.getByText("Loading...")).toBeInTheDocument();
+    });
+    await waitFor(() => {
+      expect(screen.queryByText("Loading...")).toBeNull();
     });
   });
 
@@ -23,7 +35,13 @@ describe("CharacterDetails Component", () => {
       initialIndex: 1,
     });
 
-    render(<RouterProvider router={router} />);
+    render(
+      <Provider store={store}>
+        <ThemeProvider>
+          <RouterProvider router={router} />
+        </ThemeProvider>
+      </Provider>,
+    );
 
     await waitFor(() => {
       expect(
@@ -47,7 +65,13 @@ describe("CharacterDetails Component", () => {
       initialIndex: 1,
     });
 
-    render(<RouterProvider router={router} />);
+    render(
+      <Provider store={store}>
+        <ThemeProvider>
+          <RouterProvider router={router} />
+        </ThemeProvider>
+      </Provider>,
+    );
 
     await waitFor(() => {
       expect(screen.getByText("Character not found")).toBeInTheDocument();
@@ -60,7 +84,13 @@ describe("CharacterDetails Component", () => {
       initialIndex: 1,
     });
 
-    render(<RouterProvider router={router} />);
+    render(
+      <Provider store={store}>
+        <ThemeProvider>
+          <RouterProvider router={router} />
+        </ThemeProvider>
+      </Provider>,
+    );
 
     await waitFor(() => {
       const closeButton = screen.getByText("x");

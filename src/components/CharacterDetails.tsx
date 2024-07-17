@@ -1,68 +1,62 @@
-import React from "react";
-import {
-  Await,
-  useLoaderData,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
-import { CharacterLoaderData } from "../loaders/characterDetailsLoader";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Loading from "./Loading";
 import styles from "./CharacterDetails.module.css";
+import { starWarsApi } from "../features/starWarsApi/starWarsSlice";
 
 export default function CharacterDetails() {
-  const { character } = useLoaderData() as CharacterLoaderData;
+  const { id } = useParams<{ id: string }>();
+  const { data: character, isLoading } = starWarsApi.useGetCharacterByIdQuery(
+    id!,
+  );
   const navigate = useNavigate();
   const location = useLocation();
 
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (typeof character?.name === "undefined") {
+    return <div>Character not found</div>;
+  }
+
   return (
-    <React.Suspense fallback={<Loading />}>
-      <Await resolve={character}>
-        {(character) =>
-          typeof character.name !== "undefined" ? (
-            <div className={styles.details}>
-              <button
-                className={styles.closeButton}
-                onClick={() => {
-                  navigate(`/${location.search}`);
-                }}
-              >
-                x
-              </button>
-              <h2 className={styles.header}>{character.name}</h2>
-              <p className={styles.detailItem}>
-                <strong>Gender:</strong> {character.gender}
-              </p>
-              <p className={styles.detailItem}>
-                <strong>Height:</strong> {character.height}
-              </p>
-              <p className={styles.detailItem}>
-                <strong>Mass:</strong> {character.mass}
-              </p>
-              <p className={styles.detailItem}>
-                <strong>Hair Color:</strong> {character.hair_color}
-              </p>
-              <p className={styles.detailItem}>
-                <strong>Skin Color:</strong> {character.skin_color}
-              </p>
-              <p className={styles.detailItem}>
-                <strong>Eye Color:</strong> {character.eye_color}
-              </p>
-              <p className={styles.detailItem}>
-                <strong>Birth Year:</strong> {character.birth_year}
-              </p>
-              <p className={styles.detailItem}>
-                <strong>Homeworld:</strong>{" "}
-                <a href={character.homeworld}>Link</a>
-              </p>
-              <p className={styles.detailItem}>
-                <strong>URL:</strong> {character.url}
-              </p>
-            </div>
-          ) : (
-            <div>Character not found</div>
-          )
-        }
-      </Await>
-    </React.Suspense>
+    <div className={styles.details}>
+      <button
+        className={styles.closeButton}
+        onClick={() => {
+          navigate(`/${location.search}`);
+        }}
+      >
+        x
+      </button>
+      <h2 className={styles.header}>{character.name}</h2>
+      <p className={styles.detailItem}>
+        <strong>Gender:</strong> {character.gender}
+      </p>
+      <p className={styles.detailItem}>
+        <strong>Height:</strong> {character.height}
+      </p>
+      <p className={styles.detailItem}>
+        <strong>Mass:</strong> {character.mass}
+      </p>
+      <p className={styles.detailItem}>
+        <strong>Hair Color:</strong> {character.hair_color}
+      </p>
+      <p className={styles.detailItem}>
+        <strong>Skin Color:</strong> {character.skin_color}
+      </p>
+      <p className={styles.detailItem}>
+        <strong>Eye Color:</strong> {character.eye_color}
+      </p>
+      <p className={styles.detailItem}>
+        <strong>Birth Year:</strong> {character.birth_year}
+      </p>
+      <p className={styles.detailItem}>
+        <strong>Homeworld:</strong> <a href={character.homeworld}>Link</a>
+      </p>
+      <p className={styles.detailItem}>
+        <strong>URL:</strong> {character.url}
+      </p>
+    </div>
   );
 }

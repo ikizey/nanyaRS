@@ -4,7 +4,6 @@ import NotFound from "./NotFound";
 import ErrorFallback from "../components/ErrorFallback";
 import CharacterDetails from "../components/CharacterDetails";
 import { loader as searchLoader } from "../loaders/resultsLoader";
-import { loader as characterDetailsLoader } from "../loaders/characterDetailsLoader";
 
 export const routes = [
   {
@@ -16,7 +15,6 @@ export const routes = [
       {
         path: "details/:id",
         element: <CharacterDetails />,
-        loader: characterDetailsLoader,
       },
     ],
   },

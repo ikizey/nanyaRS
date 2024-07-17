@@ -11,12 +11,6 @@ function getURL() {
   return new URL("https://swapi.dev/api/people/");
 }
 
-function getUrlWithParams({ params }: LoaderFunctionArgs) {
-  const url = getURL();
-  url.pathname += params.id;
-  return url;
-}
-
 function getUrlWithSearchParams({ request }: LoaderFunctionArgs) {
   const url = getURL();
   const searchParams = getSearchParams(request);
@@ -35,11 +29,4 @@ export async function fetchStarWarsCharacters(fnArgs: LoaderFunctionArgs) {
   const { results, count }: CharactersResults = await response.json();
   const maxPage = getMaxPage(count);
   return { results, maxPage };
-}
-
-export async function fetchStarWarsCharacter(fnArgs: LoaderFunctionArgs) {
-  const url = getUrlWithParams(fnArgs);
-  const response = await fetch(url);
-  const character: Character = await response.json();
-  return character;
 }
