@@ -5,6 +5,9 @@ import { BrowserRouter } from "react-router-dom";
 import { Character } from "../types/character";
 import Results from "./Results";
 import userEvent from "@testing-library/user-event";
+import { Provider } from "react-redux";
+import { store } from "../store";
+import { ThemeProvider } from "../context/ThemeContext";
 
 const mockCharacters: Character[] = [
   {
@@ -46,8 +49,20 @@ const mockCharacters: Character[] = [
 ];
 
 describe("Results", () => {
-  it("renders a Luke and Darth characters with relevant data", () => {
-    render(<Results results={mockCharacters} />, { wrapper: BrowserRouter });
+  const setup = (results = mockCharacters) => {
+    return render(
+      <Provider store={store}>
+        <ThemeProvider>
+          <BrowserRouter>
+            <Results results={results} />
+          </BrowserRouter>
+        </ThemeProvider>
+      </Provider>,
+    );
+  };
+
+  it("renders Luke and Darth characters with relevant data", () => {
+    setup();
     const Luke = screen.getByText(mockCharacters[0].name);
     const Father = screen.getByText(mockCharacters[1].name);
     expect(Luke).toBeInTheDocument();
@@ -55,26 +70,59 @@ describe("Results", () => {
   });
 
   it("renders the specified number of cards", () => {
-    render(<Results results={mockCharacters} />, { wrapper: BrowserRouter });
+    setup();
     const characterList = screen.getAllByRole("listitem");
     expect(characterList).toHaveLength(mockCharacters.length);
   });
 
   it("displays 'No characters found' when there are no results", () => {
-    render(<Results results={[]} />, { wrapper: BrowserRouter });
+    setup([]);
     expect(screen.getByText("No characters found")).toBeInTheDocument();
   });
 
   it("clicking on a card opens a detailed card component", async () => {
     const user = userEvent.setup();
-    render(<Results results={mockCharacters} />, {
-      wrapper: BrowserRouter,
-    });
+    setup();
 
     const characterItem = screen.getByText(mockCharacters[0].name);
 
     user.click(characterItem);
 
     await waitFor(() => expect(window.location.pathname).toBe(`/details/1/`));
+  });
+
+  it("selects and deselects an item", async () => {
+    const user = userEvent.setup();
+    setup();
+
+    const checkbox = screen.getAllByRole("checkbox")[0];
+
+    expect(checkbox).not.toBeChecked();
+
+    await user.click(checkbox);
+    expect(checkbox).toBeChecked();
+
+    await user.click(checkbox);
+    expect(checkbox).not.toBeChecked();
+  });
+
+  it("maintains selection state when navigating away and back", async () => {
+    const user = userEvent.setup();
+    setup();
+
+    const checkbox = screen.getAllByRole("checkbox")[0];
+    expect(checkbox).not.toBeChecked();
+
+    await user.click(checkbox);
+    expect(checkbox).toBeChecked();
+
+    window.history.pushState({}, "Test Page", "/another-page");
+    await waitFor(() => {
+      expect(window.location.pathname).toBe("/another-page");
+    });
+    window.history.back();
+
+    const sameCheckbox = screen.getAllByRole("checkbox")[0];
+    expect(sameCheckbox).toBeChecked();
   });
 });
