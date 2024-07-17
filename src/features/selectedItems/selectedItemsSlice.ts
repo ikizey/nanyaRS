@@ -13,16 +13,13 @@ const selectedItemsSlice = createSlice({
         (item) => item.name !== action.payload,
       );
     },
-    setItems: (state, action: PayloadAction<Character[]>) => {
-      state.selectedItems = action.payload;
-    },
     unselectAllItems: (state) => {
       state.selectedItems = [];
     },
   },
 });
 
-export const { addItem, removeItem, setItems, unselectAllItems } =
+export const { addItem, removeItem, unselectAllItems } =
   selectedItemsSlice.actions;
 
 export default selectedItemsSlice.reducer;
