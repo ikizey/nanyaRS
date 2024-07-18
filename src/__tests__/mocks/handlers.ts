@@ -1,5 +1,5 @@
 import { http, HttpResponse } from "msw";
-import { mockCharacter, mockCharactersResults } from "./starWarsAPI";
+import { Luke, mockCharactersResults } from "./starWarsAPI";
 
 export const handlers = [
   http.get("https://swapi.dev/api/people", () => {
@@ -7,7 +7,7 @@ export const handlers = [
   }),
 
   http.get("https://swapi.dev/api/people/1", () => {
-    return HttpResponse.json(mockCharacter);
+    return HttpResponse.json(Luke);
   }),
 
   http.get("https://swapi.dev/api/people/12345", () => {
