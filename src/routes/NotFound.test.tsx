@@ -1,15 +1,14 @@
-import { render, screen } from "@testing-library/react";
-import { createMemoryRouter, RouterProvider } from "react-router-dom";
-import { routes } from "./router";
+import { MemoryRouter } from "react-router-dom";
+import { screen, setup } from "../__tests__/setup";
+import Router from "./Router";
 
 describe("NotFound", () => {
   it("shows Not Found page for unknown path", () => {
-    const router = createMemoryRouter(routes, {
-      initialEntries: ["/no-such-path/"],
-      initialIndex: 1,
-    });
-
-    render(<RouterProvider router={router} />);
+    setup(
+      <MemoryRouter initialEntries={["/no-such-path"]}>
+        <Router />
+      </MemoryRouter>,
+    );
 
     const NotFoundText = screen.getByText(/404 - Page Not Found/i);
     expect(NotFoundText).toBeInTheDocument();

@@ -1,25 +1,20 @@
-import { render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { createMemoryRouter, RouterProvider } from "react-router-dom";
-import { routes } from "../routes/router";
-import { Provider } from "react-redux";
-import { store } from "../store";
-import { ThemeProvider } from "../context/ThemeContext";
+import { setup, screen, waitFor } from "../__tests__/setup";
+import Router from "../routes/Router";
+import { MemoryRouter } from "react-router-dom";
 
 describe("CharacterDetails Component", () => {
-  it("displays loading indicator while fetching data", async () => {
-    const router = createMemoryRouter(routes, {
-      initialEntries: ["/details/1/"],
-      initialIndex: 1,
-    });
-
-    render(
-      <Provider store={store}>
-        <ThemeProvider>
-          <RouterProvider router={router} />
-        </ThemeProvider>
-      </Provider>,
+  const renderCharacterDetails = (characterId: string = "1") =>
+    setup(
+      <MemoryRouter
+        initialEntries={[`/details/${characterId}/`]}
+        initialIndex={1}
+      >
+        <Router />
+      </MemoryRouter>,
     );
+
+  it("displays loading indicator while fetching data", async () => {
+    renderCharacterDetails();
 
     await waitFor(() => {
       const loaders = screen.getAllByText("Loading...");
@@ -31,18 +26,7 @@ describe("CharacterDetails Component", () => {
   });
 
   it("displays detailed info of Luke Skywalker correctly", async () => {
-    const router = createMemoryRouter(routes, {
-      initialEntries: ["/details/1/"],
-      initialIndex: 1,
-    });
-
-    render(
-      <Provider store={store}>
-        <ThemeProvider>
-          <RouterProvider router={router} />
-        </ThemeProvider>
-      </Provider>,
-    );
+    renderCharacterDetails();
 
     await waitFor(() => {
       expect(
@@ -61,18 +45,8 @@ describe("CharacterDetails Component", () => {
   });
 
   it('displays "character not found" for non existing character', async () => {
-    const router = createMemoryRouter(routes, {
-      initialEntries: ["/details/12345"],
-      initialIndex: 1,
-    });
-
-    render(
-      <Provider store={store}>
-        <ThemeProvider>
-          <RouterProvider router={router} />
-        </ThemeProvider>
-      </Provider>,
-    );
+    const nonExistentCharacterId = "12345";
+    renderCharacterDetails(nonExistentCharacterId);
 
     await waitFor(() => {
       expect(screen.getByText("Character not found")).toBeInTheDocument();
@@ -80,23 +54,12 @@ describe("CharacterDetails Component", () => {
   });
 
   it("hides the component when clicking the close button", async () => {
-    const router = createMemoryRouter(routes, {
-      initialEntries: ["/details/1/"],
-      initialIndex: 1,
-    });
-
-    render(
-      <Provider store={store}>
-        <ThemeProvider>
-          <RouterProvider router={router} />
-        </ThemeProvider>
-      </Provider>,
-    );
+    const { user } = renderCharacterDetails();
 
     await waitFor(() => {
       const closeButton = screen.getByText("x");
       expect(closeButton).toBeInTheDocument();
-      userEvent.click(closeButton);
+      user.click(closeButton);
     });
 
     await waitFor(() => {

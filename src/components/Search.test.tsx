@@ -1,34 +1,37 @@
 import { BrowserRouter } from "react-router-dom";
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { screen, setup } from "../__tests__/setup";
 import Search from "./Search";
 
 describe("Search Component", () => {
   const placeholderText = "Search for a Star Wars character...";
+  const renderSearch = () =>
+    setup(
+      <BrowserRouter>
+        <Search />
+      </BrowserRouter>,
+    );
 
   test("renders input field", async () => {
-    render(<Search />, { wrapper: BrowserRouter });
+    renderSearch();
 
     const searchInput = screen.getByPlaceholderText(placeholderText);
     expect(searchInput).toBeInTheDocument();
   });
 
   test("renders button", async () => {
-    render(<Search />, { wrapper: BrowserRouter });
+    renderSearch();
 
     const searchButton = screen.getByRole("button");
     expect(searchButton).toBeInTheDocument();
   });
 
   it("saves entered value to local storage on button click", async () => {
-    const user = userEvent.setup();
-    render(<Search />, { wrapper: BrowserRouter });
+    const { user } = renderSearch();
 
     const searchInput = screen.getByPlaceholderText(placeholderText);
     const searchButton = screen.getByRole("button");
 
     const searchTerm = "Skywalker";
-
     await user.type(searchInput, searchTerm);
     await user.click(searchButton);
 
@@ -39,7 +42,8 @@ describe("Search Component", () => {
     const searchTerm = "vader";
     localStorage.setItem("searchTermRS", searchTerm);
 
-    render(<Search />, { wrapper: BrowserRouter });
+    renderSearch();
+
     const searchInput = screen.getByPlaceholderText(placeholderText);
     expect(searchInput).toHaveValue(searchTerm);
   });

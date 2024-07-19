@@ -1,29 +1,29 @@
 import { BrowserRouter } from "react-router-dom";
-import { render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { setup, screen, waitFor } from "../__tests__/setup";
 import Pagination from "./Pagination";
 
-const maxPage = 2;
-
 describe("Pagination component", () => {
+  const maxPage = 2;
+  const currentPage = "1";
+
+  const renderPagination = () => {
+    return setup(
+      <BrowserRouter>
+        <Pagination page={currentPage} maxPage={maxPage} />
+      </BrowserRouter>,
+    );
+  };
+
   it("updates URL query parameter to 'page=2' user clicks on second page button", async () => {
-    const user = userEvent.setup();
+    const { user } = renderPagination();
 
-    render(<Pagination page="1" maxPage={maxPage} />, {
-      wrapper: BrowserRouter,
-    });
-
-    const secondPageButton = screen.getByText("2");
-
-    user.click(secondPageButton);
+    await user.click(screen.getByText(maxPage));
 
     await waitFor(() => expect(window.location.search).toContain("page=2"));
   });
 
   it("renders 2 page buttons when maxPage is 2", async () => {
-    render(<Pagination page="1" maxPage={maxPage} />, {
-      wrapper: BrowserRouter,
-    });
+    renderPagination();
 
     const pagesButtons = screen.getAllByRole("listitem");
     expect(pagesButtons).toHaveLength(maxPage);

@@ -36,9 +36,9 @@ export const Vader = {
   url: "https://swapi.dev/api/people/4/",
 };
 
-const results = [Luke, Vader];
+export const characters = [Luke, Vader];
 
-export const mockCharactersResults = {
-  results,
-  count: results.length,
+export const charactersResults = {
+  results: characters,
+  count: characters.length,
 };
