@@ -12,13 +12,13 @@ export default function useDetails() {
     }
   }
 
-  function detailsPath(id: string) {
-    return `/details/${id}/${location.search}`;
+  function detailsPath(characterId: string) {
+    return `/details/${characterId}/${location.search}`;
   }
 
-  function openDetails(id?: string) {
-    if (id) {
-      navigate(`${detailsPath(id)}`);
+  function openDetails(characterId?: string) {
+    if (characterId) {
+      navigate(`${detailsPath(characterId)}`);
     }
   }
 

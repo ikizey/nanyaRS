@@ -8,7 +8,7 @@ export default function Router() {
   return (
     <Routes>
       <Route path="/" element={<Root />} errorElement={<ErrorFallback />}>
-        <Route path="details/:id" element={<CharacterDetails />} />
+        <Route path="details/:characterId" element={<CharacterDetails />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>

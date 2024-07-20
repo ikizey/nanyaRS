@@ -5,10 +5,9 @@ import { starWarsApi } from "../features/starWarsApi/starWarsSlice";
 import useDetails from "../hooks/useDetails";
 
 export default function CharacterDetails() {
-  const { id } = useParams<{ id: string }>();
-  const { data: character, isLoading } = starWarsApi.useGetCharacterByIdQuery(
-    id!,
-  );
+  const { characterId = "1" } = useParams();
+  const { data: character, isLoading } =
+    starWarsApi.useGetCharacterByIdQuery(characterId);
   const { closeDetails } = useDetails();
 
   if (isLoading) {
