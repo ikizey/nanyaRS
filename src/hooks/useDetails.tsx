@@ -1,10 +1,16 @@
 import { useLocation, useNavigate } from "react-router-dom";
 
 export default function useDetails() {
+  const navigate = useNavigate();
   const location = useLocation();
+
   const isDetailsPanelOpen = location.pathname.startsWith("/details");
 
-  const navigate = useNavigate();
+  function openDetails(characterId?: string) {
+    if (characterId) {
+      navigate(`/details/${characterId}/${location.search}`);
+    }
+  }
 
   function closeDetails() {
     if (isDetailsPanelOpen) {
@@ -12,20 +18,9 @@ export default function useDetails() {
     }
   }
 
-  function detailsPath(characterId: string) {
-    return `/details/${characterId}/${location.search}`;
-  }
-
-  function openDetails(characterId?: string) {
-    if (characterId) {
-      navigate(`${detailsPath(characterId)}`);
-    }
-  }
-
   return {
     isDetailsPanelOpen,
-    closeDetails,
-    detailsPath,
     openDetails,
+    closeDetails,
   };
 }
