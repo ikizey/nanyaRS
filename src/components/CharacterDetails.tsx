@@ -1,9 +1,10 @@
 import { useParams } from "react-router-dom";
-import Loading from "./Loading";
-import { starWarsApi } from "../features/starWarsApi/starWarsSlice";
+import getDetails from "../lib/character/getDetails";
 import useDetails from "../hooks/useDetails";
-import styles from "./CharacterDetails.module.css";
+import { starWarsApi } from "../features/starWarsApi/starWarsSlice";
+import Loading from "./Loading";
 import CharacterDetail from "./CharacterDetail";
+import styles from "./CharacterDetails.module.css";
 
 export default function CharacterDetails() {
   const { characterId = "1" } = useParams();
@@ -19,25 +20,7 @@ export default function CharacterDetails() {
     return <div>Character not found</div>;
   }
 
-  const desiredDetails = [
-    "gender",
-    "height",
-    "mass",
-    "hair_color",
-    "skin_color",
-    "eye_color",
-    "birth_year",
-    "url",
-  ];
-
-  const characterDetails = Object.entries(character)
-    .filter(([key]) => desiredDetails.includes(key))
-    .map(([key, value]) => {
-      const name = key
-        .replace("_", " ")
-        .replace(/\b\w/g, (firstLetter) => firstLetter.toUpperCase());
-      return { name, value };
-    });
+  const characterDetails = getDetails(character);
 
   return (
     <div className={styles.details}>
@@ -45,8 +28,8 @@ export default function CharacterDetails() {
         x
       </button>
       <h2 className={styles.header}>{character.name}</h2>
-      {characterDetails.map(({ name, value }) => (
-        <CharacterDetail key={name} name={name}>
+      {characterDetails.map(({ key, value }) => (
+        <CharacterDetail key={key} name={key}>
           {value}
         </CharacterDetail>
       ))}

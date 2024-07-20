@@ -1,19 +1,19 @@
-import { Character } from "../types/character";
-import styles from "./Results.module.css";
-import useDetails from "../hooks/useDetails";
 import { useDispatch, useSelector } from "react-redux";
+import { Character } from "../types/character";
 import { RootState } from "../store";
+import getCharacterId from "../lib/character/getCharacterId";
+import useDetails from "../hooks/useDetails";
 import {
   addItem,
   removeItem,
 } from "../features/selectedItems/selectedItemsSlice";
 import Flyout from "./Flyout";
-import getCharacterId from "../lib/getCharacterId";
+import styles from "./Results.module.css";
 
 export default function Results({ results }: { results: Character[] }) {
   const dispatch = useDispatch();
-  const selectedItems = useSelector(
-    (state: RootState) => state.selectedItems.selectedItems,
+  const { selectedItems } = useSelector(
+    (state: RootState) => state.selectedItems,
   );
 
   const { openDetails } = useDetails();
