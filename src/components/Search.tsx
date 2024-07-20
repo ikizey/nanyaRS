@@ -1,11 +1,8 @@
-import { ChangeEvent } from "react";
-import { useNavigate } from "react-router-dom";
 import useSearchTerm from "../hooks/useSearchTerm";
 import styles from "./Search.module.css";
 
 export default function Search() {
-  const { searchTerm, setSearchTerm, saveSearchTerm } = useSearchTerm();
-  const navigate = useNavigate();
+  const { searchTerm, setOnChange, search } = useSearchTerm();
 
   return (
     <div className={styles.search}>
@@ -14,17 +11,9 @@ export default function Search() {
         type="text"
         placeholder="Search for a Star Wars character..."
         value={searchTerm}
-        onChange={(event: ChangeEvent<HTMLInputElement>) => {
-          setSearchTerm(event.target.value.trim());
-        }}
+        onChange={setOnChange}
       />
-      <button
-        className={styles.searchButton}
-        onClick={() => {
-          saveSearchTerm(searchTerm);
-          navigate(`?search=${searchTerm}`);
-        }}
-      >
+      <button className={styles.searchButton} onClick={search}>
         Search
       </button>
     </div>

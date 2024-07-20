@@ -1,20 +1,28 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, ChangeEvent } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export default function useSearchTerm() {
   const LSSearchKeyName = "searchTermRS";
-  const loadSearchTerm = useCallback(() => {
-    return localStorage.getItem(LSSearchKeyName) || "";
-  }, []);
+  const [searchTerm, setSearchTerm] = useState(
+    localStorage.getItem(LSSearchKeyName) || "",
+  );
+  const [firstRender, setFirstRender] = useState(true);
 
   const saveSearchTerm = useCallback((searchTerm: string) => {
     localStorage.setItem(LSSearchKeyName, searchTerm);
   }, []);
 
-  const [searchTerm, setSearchTerm] = useState(loadSearchTerm);
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
-  const [firstRender, setFirstRender] = useState(true);
+
+  function setOnChange(event: ChangeEvent<HTMLInputElement>) {
+    setSearchTerm(event.target.value.trim());
+  }
+
+  function search() {
+    saveSearchTerm(searchTerm);
+    navigate(`${pathname}?search=${searchTerm}`);
+  }
 
   useEffect(() => {
     if (firstRender) {
@@ -30,8 +38,7 @@ export default function useSearchTerm() {
 
   return {
     searchTerm,
-    setSearchTerm,
-    loadSearchTerm,
-    saveSearchTerm,
+    setOnChange,
+    search,
   };
 }
