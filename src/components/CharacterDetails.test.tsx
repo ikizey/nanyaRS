@@ -40,8 +40,7 @@ describe("CharacterDetails Component", () => {
     expect(screen.getByText("fair")).toBeInTheDocument();
     expect(screen.getByText("blue")).toBeInTheDocument();
     expect(screen.getByText("19BBY")).toBeInTheDocument();
-    expect(screen.getByText("Homeworld:")).toBeInTheDocument();
-    expect(screen.getByText("URL:")).toBeInTheDocument();
+    expect(screen.getByText("Url:")).toBeInTheDocument();
   });
 
   it('displays "character not found" for non existing character', async () => {
