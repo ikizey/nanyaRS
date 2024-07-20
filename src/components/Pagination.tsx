@@ -1,32 +1,29 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import styles from "./Pagination.module.css";
 
-export default function Pagination({
-  page,
-  maxPage,
-}: {
-  page: string;
-  maxPage: number;
-}) {
-  const pages = Array.from(Array(maxPage).keys()).map((number) => number + 1);
-  const location = useLocation();
-  const urlSearchParams = new URLSearchParams(location.search);
-  const { search } = Object.fromEntries(urlSearchParams);
+export default function Pagination({ maxPage }: { maxPage: number }) {
+  const pages = Array.from(Array(maxPage).keys()).map((number) =>
+    (number + 1).toString(),
+  );
   const navigate = useNavigate();
 
+  const [urlSearchParams] = useSearchParams();
+  const search = urlSearchParams.get("search") || "";
+  const currentPage = urlSearchParams.get("page") || "1";
+
   return (
-    <ul className={styles.pagination}>
-      {pages.map((pageNum) => (
-        <li
-          key={pageNum}
-          className={`${styles.pageItem} ${pageNum.toString() === page ? styles.activePageItem : ""}`}
-          onClick={() => {
-            navigate(`/?search=${search || ""}&page=${pageNum.toString()}`);
-          }}
-        >
-          {pageNum}
-        </li>
-      ))}
-    </ul>
+    <nav>
+      <ul className={styles.pagination}>
+        {pages.map((page) => (
+          <li
+            key={page}
+            className={`${styles.pageItem} ${page === currentPage ? styles.active : ""}`}
+            onClick={() => navigate(`/?search=${search}&page=${page}`)}
+          >
+            {page}
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 }

@@ -4,12 +4,11 @@ import Pagination from "./Pagination";
 
 describe("Pagination component", () => {
   const maxPage = 2;
-  const currentPage = "1";
 
   const renderPagination = () => {
     return setup(
       <BrowserRouter>
-        <Pagination page={currentPage} maxPage={maxPage} />
+        <Pagination maxPage={maxPage} />
       </BrowserRouter>,
     );
   };

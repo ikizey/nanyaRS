@@ -8,7 +8,7 @@
   cursor: pointer;
 }
 
-.activePageItem {
+.active {
   background-color: var(--shadow-color);
   color: var(--primary-color);
   font-weight: bold;

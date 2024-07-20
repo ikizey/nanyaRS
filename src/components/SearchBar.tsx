@@ -1,11 +1,11 @@
 import { useLocation } from "react-router-dom";
 import useDetails from "../hooks/useDetails";
-import Search from "./Search";
-import Results from "./Results";
+import { starWarsApi } from "../features/starWarsApi/starWarsSlice";
 import Loading from "./Loading";
 import Pagination from "./Pagination";
+import Results from "./Results";
+import Search from "./Search";
 import styles from "./SearchBar.module.css";
-import { starWarsApi } from "../features/starWarsApi/starWarsSlice";
 
 function getMaxPage(count?: number) {
   if (!count) {
@@ -19,14 +19,10 @@ export default function SearchBar() {
   const search = useLocation().search;
   const { data, isLoading } = starWarsApi.useGetCharactersQuery(search);
 
-  const queryParams = new URLSearchParams(search);
-  const page = queryParams.get("page") || "1";
-
-  const results = data ? data.results : [];
+  const results = data?.results || [];
   const maxPage = getMaxPage(data?.count);
 
-  const { closeDetails } = useDetails();
-  const { isDetailsPanelOpen } = useDetails();
+  const { closeDetails, isDetailsPanelOpen } = useDetails();
 
   return (
     <div className={styles.appContainer} onClick={closeDetails}>
@@ -43,7 +39,7 @@ export default function SearchBar() {
 
       <footer className={styles.footer}>
         {maxPage && !isDetailsPanelOpen ? (
-          <Pagination page={page} maxPage={maxPage} />
+          <Pagination maxPage={maxPage} />
         ) : null}
       </footer>
     </div>
