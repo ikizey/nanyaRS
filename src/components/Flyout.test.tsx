@@ -62,7 +62,7 @@ describe("Flyout", () => {
     });
   });
 
-  it("unselects all items when 'Unselect all' button is clicked", async () => {
+  it("deselects all items when 'Deselect all' button is clicked", async () => {
     const { user } = renderResults();
 
     const checkboxes = screen.getAllByRole("checkbox");
@@ -73,8 +73,8 @@ describe("Flyout", () => {
       expect(screen.getByText(/2 items selected/i)).toBeInTheDocument();
     });
 
-    const unselectAllButton = screen.getByText(/unselect all/i);
-    await user.click(unselectAllButton);
+    const deselectAllButton = screen.getByText(/deselect all/i);
+    await user.click(deselectAllButton);
 
     await waitFor(() => {
       expect(screen.queryByText(/items selected/i)).not.toBeInTheDocument();
