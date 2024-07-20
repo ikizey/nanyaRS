@@ -8,6 +8,7 @@ import {
   removeItem,
 } from "../features/selectedItems/selectedItemsSlice";
 import Flyout from "./Flyout";
+import getCharacterId from "../lib/getCharacterId";
 
 export default function Results({ results }: { results: Character[] }) {
   const dispatch = useDispatch();
@@ -38,8 +39,8 @@ export default function Results({ results }: { results: Character[] }) {
               className={styles.resultItem}
               key={character.name}
               onClick={() => {
-                const id = character.url.split("/").filter(Boolean).pop();
-                openDetails(id);
+                const characterId = getCharacterId(character);
+                openDetails(characterId);
               }}
             >
               <input
