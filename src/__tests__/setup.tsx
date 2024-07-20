@@ -1,5 +1,5 @@
 import { expect, afterEach, beforeAll, afterAll } from "vitest";
-import { cleanup, render, RenderOptions } from "@testing-library/react";
+import { render, RenderOptions } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 import * as matchers from "@testing-library/jest-dom/matchers";
@@ -9,7 +9,6 @@ import AllProviders from "../components/AllProviders";
 expect.extend(matchers);
 
 afterEach(() => {
-  cleanup();
   server.resetHandlers();
 });
 
