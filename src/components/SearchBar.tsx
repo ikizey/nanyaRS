@@ -7,10 +7,7 @@ import Results from "./Results";
 import Search from "./Search";
 import styles from "./SearchBar.module.css";
 
-function getMaxPage(count?: number) {
-  if (!count) {
-    return 1;
-  }
+function getMaxPage(count: number = 1) {
   const CHARACTERS_PER_PAGE = 10;
   return Math.ceil(count / CHARACTERS_PER_PAGE);
 }
@@ -20,7 +17,7 @@ export default function SearchBar() {
   const { data, isLoading } = starWarsApi.useGetCharactersQuery(search);
 
   const results = data?.results || [];
-  const maxPage = getMaxPage(data?.count);
+  const maxPage = getMaxPage(data?.count || 1);
 
   const { closeDetails, isDetailsPanelOpen } = useDetails();
 
