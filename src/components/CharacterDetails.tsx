@@ -8,11 +8,14 @@ import styles from "./CharacterDetails.module.css";
 
 export default function CharacterDetails() {
   const { characterId = "1" } = useParams();
-  const { data: character, isLoading } =
-    starWarsApi.useGetCharacterByIdQuery(characterId);
+  const {
+    data: character,
+    isLoading,
+    isFetching,
+  } = starWarsApi.useGetCharacterByIdQuery(characterId);
   const { closeDetails } = useDetails();
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return <Loading />;
   }
 

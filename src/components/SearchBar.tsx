@@ -14,7 +14,8 @@ function getMaxPage(count: number = 1) {
 
 export default function SearchBar() {
   const search = useLocation().search;
-  const { data, isLoading } = starWarsApi.useGetCharactersQuery(search);
+  const { data, isLoading, isFetching } =
+    starWarsApi.useGetCharactersQuery(search);
 
   const results = data?.results || [];
   const maxPage = getMaxPage(data?.count || 1);
@@ -31,7 +32,7 @@ export default function SearchBar() {
       </section>
       <section className={styles.resultsSection}>
         <h2 className={styles.sectionHeader}>Search Results:</h2>
-        {isLoading ? <Loading /> : <Results results={results} />}
+        {isLoading || isFetching ? <Loading /> : <Results results={results} />}
       </section>
 
       <footer className={styles.footer}>
