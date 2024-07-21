@@ -14,13 +14,13 @@ describe("Search Component", () => {
   const searchButton = () => screen.getByRole("button", { name: /search/i });
   const searchTerm = "Skywalker";
 
-  test("renders input field", async () => {
+  it("renders input field", async () => {
     renderSearch();
 
     expect(searchElement()).toBeInTheDocument();
   });
 
-  test("renders button", async () => {
+  it("renders button", async () => {
     renderSearch();
 
     expect(searchButton()).toBeInTheDocument();
@@ -35,7 +35,7 @@ describe("Search Component", () => {
     expect(localStorage.getItem("searchTermRS")).toBe(searchTerm);
   });
 
-  test("retrieves value 'vader' from local storage upon mounting and set it to input field", async () => {
+  it("retrieves value 'vader' from local storage upon mounting and set it to input field", async () => {
     localStorage.setItem("searchTermRS", searchTerm);
 
     renderSearch();
