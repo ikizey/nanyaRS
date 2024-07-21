@@ -20,7 +20,7 @@ export default function CharacterDetails() {
   }
 
   if (typeof character?.name === "undefined") {
-    return <div>Character not found</div>;
+    return <div role="status">Character not found</div>;
   }
 
   const characterDetails = getDetails(character);

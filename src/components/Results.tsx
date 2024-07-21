@@ -54,7 +54,9 @@ export default function Results({ results }: { results: Character[] }) {
             </li>
           ))
         ) : (
-          <div className={styles.noResult}>No characters found</div>
+          <div className={styles.noResult} role="status">
+            No characters found
+          </div>
         )}
       </ul>
       <FlyoutContainer />

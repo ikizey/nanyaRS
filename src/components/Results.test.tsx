@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
 import { BrowserRouter } from "react-router-dom";
-import { screen, setup, waitFor } from "../__tests__/setup";
+import { screen, setup } from "../__tests__/setup";
 import { characters } from "../__tests__/mocks/starWarsAPI";
 import Results from "./Results";
 
@@ -35,7 +35,8 @@ describe("Results", () => {
 
   it("displays 'No characters found' when there are no results", () => {
     renderResults([]);
-    expect(screen.getByText("No characters found")).toBeInTheDocument();
+    expect(screen.getByRole("status")).toBeInTheDocument();
+    expect(screen.getByRole("status").textContent).toContain("No characters");
   });
 
   it("clicking on a card opens a detailed card component", async () => {
@@ -43,9 +44,9 @@ describe("Results", () => {
 
     const characterItem = screen.getByText(characters[0].name);
 
-    user.click(characterItem);
+    await user.click(characterItem);
 
-    await waitFor(() => expect(window.location.pathname).toBe(`/details/1/`));
+    expect(window.location.pathname).toBe(`/details/1/`);
   });
 
   it("selects and deselects an item", async () => {
@@ -71,12 +72,9 @@ describe("Results", () => {
     expect(checkbox).toBeChecked();
 
     window.history.pushState({}, "Test Page", "/another-page");
-    await waitFor(() => {
-      expect(window.location.pathname).toBe("/another-page");
-    });
-    window.history.back();
+    expect(window.location.pathname).toBe("/another-page");
 
-    const sameCheckbox = screen.getAllByRole("checkbox")[0];
-    expect(sameCheckbox).toBeChecked();
+    window.history.back();
+    expect(screen.getAllByRole("checkbox")[0]).toBeChecked();
   });
 });

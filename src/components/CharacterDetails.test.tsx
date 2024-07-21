@@ -1,6 +1,6 @@
+import { MemoryRouter } from "react-router-dom";
 import { setup, screen, waitFor } from "../__tests__/setup";
 import Router from "../routes/Router";
-import { MemoryRouter } from "react-router-dom";
 
 describe("CharacterDetails Component", () => {
   const renderCharacterDetails = (characterId: string = "1") =>
@@ -16,12 +16,15 @@ describe("CharacterDetails Component", () => {
   it("displays loading indicator while fetching data", async () => {
     renderCharacterDetails();
 
+    const statuses = screen.getAllByRole("status");
+    const length = statuses.length;
+    expect(length).toBeGreaterThan(0);
+    expect(
+      statuses.filter((status) => status.textContent === "Loading...").length,
+    ).toBeGreaterThan(0);
+
     await waitFor(() => {
-      const loaders = screen.getAllByRole("status");
-      expect(loaders.length).toBeGreaterThan(0);
-    });
-    await waitFor(() => {
-      expect(screen.queryByRole("status")).toBeNull();
+      expect(screen.queryAllByRole("status").length).toBeLessThan(length);
     });
   });
 
@@ -30,7 +33,7 @@ describe("CharacterDetails Component", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByRole("heading", { name: /Luke Skywalker/i, level: 2 }),
+        screen.getByRole("heading", { name: /luke skywalker/i, level: 2 }),
       ).toBeInTheDocument();
     });
     expect(screen.getByText("male")).toBeInTheDocument();
@@ -56,7 +59,7 @@ describe("CharacterDetails Component", () => {
     const { user } = renderCharacterDetails();
 
     await waitFor(() => {
-      const closeButton = screen.getByText("x");
+      const closeButton = screen.getByRole("button", { name: "x" });
       expect(closeButton).toBeInTheDocument();
       user.click(closeButton);
     });
