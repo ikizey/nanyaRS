@@ -6,8 +6,12 @@ export default function Search() {
 
   return (
     <div className={styles.search}>
+      <label className="hidden" htmlFor="search">
+        search
+      </label>
       <input
         className={styles.searchInput}
+        id="search"
         type="text"
         placeholder="Search for a Star Wars character..."
         value={searchTerm}

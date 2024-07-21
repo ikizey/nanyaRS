@@ -3,7 +3,6 @@ import { screen, setup } from "../__tests__/setup";
 import Search from "./Search";
 
 describe("Search Component", () => {
-  const placeholderText = "Search for a Star Wars character...";
   const renderSearch = () =>
     setup(
       <BrowserRouter>
@@ -14,7 +13,7 @@ describe("Search Component", () => {
   test("renders input field", async () => {
     renderSearch();
 
-    const searchInput = screen.getByPlaceholderText(placeholderText);
+    const searchInput = screen.getByRole("textbox", { name: /search/i });
     expect(searchInput).toBeInTheDocument();
   });
 
@@ -28,7 +27,7 @@ describe("Search Component", () => {
   it("saves entered value to local storage on button click", async () => {
     const { user } = renderSearch();
 
-    const searchInput = screen.getByPlaceholderText(placeholderText);
+    const searchInput = screen.getByRole("textbox", { name: /search/i });
     const searchButton = screen.getByRole("button");
 
     const searchTerm = "Skywalker";
@@ -44,7 +43,7 @@ describe("Search Component", () => {
 
     renderSearch();
 
-    const searchInput = screen.getByPlaceholderText(placeholderText);
+    const searchInput = screen.getByRole("textbox", { name: /search/i });
     expect(searchInput).toHaveValue(searchTerm);
   });
 });
