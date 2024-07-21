@@ -7,7 +7,7 @@ import {
   addItem,
   removeItem,
 } from "../features/selectedItems/selectedItemsSlice";
-import Flyout from "./Flyout";
+import FlyoutContainer from "./FlyoutContainer";
 import styles from "./Results.module.css";
 
 export default function Results({ results }: { results: Character[] }) {
@@ -57,7 +57,7 @@ export default function Results({ results }: { results: Character[] }) {
           <div className={styles.noResult}>No characters found</div>
         )}
       </ul>
-      <Flyout />
+      <FlyoutContainer />
     </>
   );
 }
