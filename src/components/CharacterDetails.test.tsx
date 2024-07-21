@@ -17,11 +17,11 @@ describe("CharacterDetails Component", () => {
     renderCharacterDetails();
 
     await waitFor(() => {
-      const loaders = screen.getAllByText("Loading...");
+      const loaders = screen.getAllByRole("status");
       expect(loaders.length).toBeGreaterThan(0);
     });
     await waitFor(() => {
-      expect(screen.queryByText("Loading...")).toBeNull();
+      expect(screen.queryByRole("status")).toBeNull();
     });
   });
 
