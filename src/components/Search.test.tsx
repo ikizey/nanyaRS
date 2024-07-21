@@ -10,40 +10,36 @@ describe("Search Component", () => {
       </BrowserRouter>,
     );
 
+  const searchElement = () => screen.getByRole("textbox", { name: /search/i });
+  const searchButton = () => screen.getByRole("button", { name: /search/i });
+  const searchTerm = "Skywalker";
+
   test("renders input field", async () => {
     renderSearch();
 
-    const searchInput = screen.getByRole("textbox", { name: /search/i });
-    expect(searchInput).toBeInTheDocument();
+    expect(searchElement()).toBeInTheDocument();
   });
 
   test("renders button", async () => {
     renderSearch();
 
-    const searchButton = screen.getByRole("button");
-    expect(searchButton).toBeInTheDocument();
+    expect(searchButton()).toBeInTheDocument();
   });
 
   it("saves entered value to local storage on button click", async () => {
     const { user } = renderSearch();
 
-    const searchInput = screen.getByRole("textbox", { name: /search/i });
-    const searchButton = screen.getByRole("button");
-
-    const searchTerm = "Skywalker";
-    await user.type(searchInput, searchTerm);
-    await user.click(searchButton);
+    await user.type(searchElement(), searchTerm);
+    await user.click(searchButton());
 
     expect(localStorage.getItem("searchTermRS")).toBe(searchTerm);
   });
 
   test("retrieves value 'vader' from local storage upon mounting and set it to input field", async () => {
-    const searchTerm = "vader";
     localStorage.setItem("searchTermRS", searchTerm);
 
     renderSearch();
 
-    const searchInput = screen.getByRole("textbox", { name: /search/i });
-    expect(searchInput).toHaveValue(searchTerm);
+    expect(searchElement()).toHaveValue(searchTerm);
   });
 });
