@@ -1,4 +1,4 @@
-import { MemoryRouter } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { describe, it, expect, vi } from "vitest";
 import { setup, screen } from "../__tests__/setup";
 import { characters } from "../__tests__/mocks/starWarsAPI";
@@ -18,9 +18,9 @@ describe("Flyout", () => {
 
   const renderResults = () =>
     setup(
-      <MemoryRouter>
+      <BrowserRouter>
         <Results results={characters} />
-      </MemoryRouter>,
+      </BrowserRouter>,
     );
 
   it("does not render when no items are selected", () => {
