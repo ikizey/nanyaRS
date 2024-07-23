@@ -50,9 +50,7 @@ describe("CharacterDetails Component", () => {
     const nonExistentCharacterId = "12345";
     renderCharacterDetails(nonExistentCharacterId);
 
-    await waitFor(() => {
-      expect(screen.getByText("Character not found")).toBeInTheDocument();
-    });
+    expect(await screen.findByText(/character not found/i)).toBeInTheDocument();
   });
 
   it("hides the component when clicking the close button", async () => {
@@ -67,7 +65,7 @@ describe("CharacterDetails Component", () => {
     await waitFor(() => {
       expect(window.location.pathname).not.toContain("/details");
     });
-    const closeButton = screen.queryByText("x");
+    const closeButton = screen.queryByRole("button", { name: "x" });
     expect(closeButton).toBeNull();
   });
 });
