@@ -10,7 +10,7 @@ describe("NotFound", () => {
       </MemoryRouter>,
     );
 
-    const NotFoundText = screen.getByText(/404 - Page Not Found/i);
+    const NotFoundText = screen.getByText(/404 - page not found/i);
     expect(NotFoundText).toBeInTheDocument();
   });
 });
