@@ -1,0 +1,33 @@
+.details {
+  /* background-color: var(--shadow-color); */
+  border-radius: 10px;
+  box-shadow: 0 2px 5px var(--shadow-color);
+
+  padding: 20px;
+  max-width: 500px;
+  margin: auto;
+  position: relative;
+}
+
+.closeButton {
+  background-color: var(--secondary-color);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 16px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--hover-secondary-color);
+  }
+}
+
+.header {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
