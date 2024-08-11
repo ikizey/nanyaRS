@@ -1,0 +1,42 @@
+.resultsList {
+  min-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.resultItem {
+  border-radius: 10px;
+  box-shadow: 0 2px 5px var(--shadow-color);
+  padding: 20px;
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 300px;
+  margin: 15px;
+  cursor: pointer;
+  position: relative;
+  top: 0;
+
+  &:hover {
+    top: -5px;
+  }
+}
+
+.resultHeader {
+  font-size: 18px;
+  margin-left: 10px;
+}
+
+.noResult {
+  font-size: 30px;
+  text-align: center;
+  color: var(--red);
+}
+
+.checkbox {
+  margin-right: 10px;
+  transform: scale(1.5);
+  cursor: pointer;
+}

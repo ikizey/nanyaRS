@@ -1,0 +1,16 @@
+.notFound {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0;
+  font-family: sans-serif;
+  height: 100%;
+}
+
+.notFoundMessage {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #b33939;
+  margin-bottom: 1rem;
+}

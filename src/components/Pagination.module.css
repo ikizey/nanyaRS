@@ -1,0 +1,15 @@
+.pagination {
+  display: flex;
+}
+
+.pageItem {
+  padding: 8px 12px;
+  border: 1px solid var(--shadow-color);
+  cursor: pointer;
+}
+
+.active {
+  background-color: var(--shadow-color);
+  color: var(--primary-color);
+  font-weight: bold;
+}
