@@ -7,7 +7,7 @@ export default function ErrorPage() {
   return (
     <div className={styles.errorFallback}>
       <p className={styles.errorMessage}>Something went wrong!</p>
-      <p className={styles.errorMessage}>We're working on fixing it.</p>
+      <p className={styles.errorMessage}>We&apos;re working on fixing it.</p>
       <button
         className={styles.resetButton}
         onClick={() => {
