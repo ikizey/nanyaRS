@@ -1,8 +1,8 @@
-import { useNavigate } from "react-router-dom";
-import styles from "./ErrorFallback.module.css";
+import { useRouter } from "next/router";
+import styles from "./error.module.css";
 
-export default function ErrorFallback() {
-  const navigate = useNavigate();
+export default function ErrorPage() {
+  const router = useRouter();
 
   return (
     <div className={styles.errorFallback}>
@@ -11,7 +11,7 @@ export default function ErrorFallback() {
       <button
         className={styles.resetButton}
         onClick={() => {
-          navigate("/");
+          router.push("/");
         }}
       >
         Try Again

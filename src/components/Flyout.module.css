@@ -10,12 +10,12 @@
   box-shadow: 0 2px 5px var(--shadow-color);
   border-radius: 5px;
 
-  p {
+  .flyoutText {
     margin: 0;
     padding-right: 10px;
   }
 
-  button {
+  .flyoutButton {
     border: none;
     padding: 10px;
     cursor: pointer;

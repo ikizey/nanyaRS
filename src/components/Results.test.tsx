@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
-import { BrowserRouter } from "react-router-dom";
 import { screen, setup } from "../__tests__/setup";
 import { characters } from "../__tests__/mocks/starWarsAPI";
+import mockRouter from "next/router";
 import Results from "./Results";
 
 describe("Results", () => {
@@ -14,11 +14,7 @@ describe("Results", () => {
   });
 
   const renderResults = (results = characters) => {
-    return setup(
-      <BrowserRouter>
-        <Results results={results} />
-      </BrowserRouter>,
-    );
+    return setup(<Results results={results} />);
   };
 
   it("renders Luke and Darth characters with relevant data", () => {
@@ -40,13 +36,14 @@ describe("Results", () => {
   });
 
   it("clicking on a card opens a detailed card component", async () => {
+    mockRouter.push("/");
     const { user } = renderResults();
 
     const characterItem = screen.getByText(characters[0].name);
 
     await user.click(characterItem);
 
-    expect(window.location.pathname).toBe(`/details/1/`);
+    expect(mockRouter.pathname).toBe("/details/1");
   });
 
   it("selects and deselects an item", async () => {

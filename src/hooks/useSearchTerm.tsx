@@ -1,19 +1,28 @@
-import { useState, useEffect, useCallback, ChangeEvent } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useState, useCallback, ChangeEvent, useEffect } from "react";
+import { useRouter } from "next/router";
 
 export default function useSearchTerm() {
   const LSSearchKeyName = "searchTermRS";
-  const [searchTerm, setSearchTerm] = useState(
-    localStorage.getItem(LSSearchKeyName) || "",
-  );
+
+  function loadSearchTerm() {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem(LSSearchKeyName) || "";
+    }
+    return "";
+  }
+
+  const [searchTerm, setSearchTerm] = useState(loadSearchTerm);
   const [firstRender, setFirstRender] = useState(true);
 
   const saveSearchTerm = useCallback((searchTerm: string) => {
     localStorage.setItem(LSSearchKeyName, searchTerm);
   }, []);
 
-  const navigate = useNavigate();
-  const pathname = useLocation().pathname;
+  const router = useRouter();
+  const query = router.query as Record<string, string>;
+  const urlSearchParams = new URLSearchParams(query);
+  const searchQuery = urlSearchParams.get("search") || "";
+  const pathname = router.pathname;
 
   function setOnChange(event: ChangeEvent<HTMLInputElement>) {
     setSearchTerm(event.target.value.trim());
@@ -21,20 +30,17 @@ export default function useSearchTerm() {
 
   function search() {
     saveSearchTerm(searchTerm);
-    navigate(`${pathname}?search=${searchTerm}`);
+    router.push(`${pathname}?search=${searchTerm}`);
   }
 
   useEffect(() => {
     if (firstRender) {
       setFirstRender(false);
-      if (searchTerm) {
-        navigate(`${pathname}?search=${searchTerm}`);
+      if (searchQuery) {
+        setSearchTerm(searchQuery);
       }
     }
-    return () => {
-      saveSearchTerm(searchTerm);
-    };
-  }, [saveSearchTerm, searchTerm, pathname, navigate, firstRender]);
+  }, [searchQuery, firstRender]);
 
   return {
     searchTerm,

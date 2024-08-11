@@ -1,4 +1,4 @@
-import { expect, afterEach, beforeAll, afterAll } from "vitest";
+import { expect, afterEach, beforeAll, afterAll, vi } from "vitest";
 import { render, RenderOptions } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
@@ -7,6 +7,8 @@ import { server } from "./mocks/server";
 import AllProviders from "../components/AllProviders";
 
 expect.extend(matchers);
+
+vi.mock("next/router", () => vi.importActual("next-router-mock"));
 
 afterEach(() => {
   server.resetHandlers();

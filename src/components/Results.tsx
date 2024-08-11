@@ -40,7 +40,7 @@ export default function Results({ results }: { results: Character[] }) {
               key={character.name}
               onClick={() => {
                 const characterId = getCharacterId(character);
-                openDetails(characterId);
+                openDetails(characterId || "");
               }}
             >
               <input

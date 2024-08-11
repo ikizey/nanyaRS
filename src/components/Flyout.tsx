@@ -11,8 +11,12 @@ export default function Flyout({
 }) {
   return (
     <div className={styles.flyout}>
-      <p>{`${itemsCount} ${itemsCount === 1 ? "item" : "items"} selected`}</p>
-      <button onClick={onDeselectAll}>Deselect all</button>
+      <p
+        className={styles.flyoutText}
+      >{`${itemsCount} ${itemsCount === 1 ? "item" : "items"} selected`}</p>
+      <button className={styles.flyoutButton} onClick={onDeselectAll}>
+        Deselect all
+      </button>
       <a
         className={styles.downloadButton}
         href={downloadUrl}

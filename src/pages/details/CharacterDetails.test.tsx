@@ -1,32 +1,29 @@
-import { MemoryRouter } from "react-router-dom";
-import { setup, screen, waitFor } from "../__tests__/setup";
-import Router from "../routes/Router";
+import { setup, screen, waitFor } from "../../__tests__/setup";
+import mockRouter from "next/router";
+import CharacterDetailsRoute from "./[characterId]";
+import { characters, Luke } from "../../__tests__/mocks/starWarsAPI";
 
 describe("CharacterDetails Component", () => {
-  const renderCharacterDetails = (characterId: string = "1") =>
-    setup(
-      <MemoryRouter
-        initialEntries={[`/details/${characterId}/`]}
-        initialIndex={1}
-      >
-        <Router />
-      </MemoryRouter>,
-    );
-
-  it("displays loading indicator while fetching data", async () => {
-    renderCharacterDetails();
-
-    const statuses = screen.getAllByRole("status");
-    const length = statuses.length;
-    expect(length).toBeGreaterThan(0);
-    expect(
-      statuses.filter((status) => status.textContent === "Loading...").length,
-    ).toBeGreaterThan(0);
-
-    await waitFor(() => {
-      expect(screen.queryAllByRole("status").length).toBeLessThan(length);
-    });
-  });
+  function renderCharacterDetails(characterId: string = "1") {
+    mockRouter.push(`/details/${characterId}`);
+    if (characterId === "1") {
+      return setup(
+        <CharacterDetailsRoute
+          character={Luke}
+          characters={characters}
+          count={characters.length}
+        />,
+      );
+    } else {
+      return setup(
+        <CharacterDetailsRoute
+          character={null}
+          characters={characters}
+          count={characters.length}
+        />,
+      );
+    }
+  }
 
   it("displays detailed info of Luke Skywalker correctly", async () => {
     renderCharacterDetails();
@@ -63,9 +60,7 @@ describe("CharacterDetails Component", () => {
     });
 
     await waitFor(() => {
-      expect(window.location.pathname).not.toContain("/details");
+      expect(mockRouter.pathname).not.toContain("/details");
     });
-    const closeButton = screen.queryByRole("button", { name: "x" });
-    expect(closeButton).toBeNull();
   });
 });

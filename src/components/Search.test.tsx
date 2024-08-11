@@ -1,14 +1,8 @@
-import { BrowserRouter } from "react-router-dom";
 import { screen, setup } from "../__tests__/setup";
 import Search from "./Search";
 
 describe("Search Component", () => {
-  const renderSearch = () =>
-    setup(
-      <BrowserRouter>
-        <Search />
-      </BrowserRouter>,
-    );
+  const renderSearch = () => setup(<Search />);
 
   const searchElement = () => screen.getByRole("textbox", { name: /search/i });
   const searchButton = () => screen.getByRole("button", { name: /search/i });

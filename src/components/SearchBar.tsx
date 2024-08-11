@@ -1,38 +1,40 @@
-import { useLocation } from "react-router-dom";
 import useDetails from "../hooks/useDetails";
-import { starWarsApi } from "../features/starWarsApi/starWarsSlice";
 import Loading from "./Loading";
 import Pagination from "./Pagination";
 import Results from "./Results";
-import Search from "./Search";
 import styles from "./SearchBar.module.css";
+import { Character } from "../types/character";
+import Search from "./Search";
 
 function getMaxPage(count: number = 1) {
   const CHARACTERS_PER_PAGE = 10;
   return Math.ceil(count / CHARACTERS_PER_PAGE);
 }
 
-export default function SearchBar() {
-  const search = useLocation().search;
-  const { data, isLoading, isFetching } =
-    starWarsApi.useGetCharactersQuery(search);
+interface SearchBarProps {
+  characters: Character[];
+  count: number;
+}
 
-  const results = data?.results || [];
-  const maxPage = getMaxPage(data?.count || 1);
-
+export default function SearchBar({ characters, count }: SearchBarProps) {
   const { closeDetails, isDetailsPanelOpen } = useDetails();
+  const maxPage = getMaxPage(count);
 
   return (
     <div className={styles.appContainer} onClick={closeDetails}>
       <section>
         <h2 className={styles.sectionHeader}>
-          Search for a Star Wars characters
+          Search for a Star Wars character
         </h2>
         <Search />
       </section>
       <section className={styles.resultsSection}>
         <h2 className={styles.sectionHeader}>Search Results:</h2>
-        {isLoading || isFetching ? <Loading /> : <Results results={results} />}
+        {characters.length === 0 ? (
+          <Loading />
+        ) : (
+          <Results results={characters} />
+        )}
       </section>
 
       <footer className={styles.footer}>

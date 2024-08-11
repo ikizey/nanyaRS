@@ -8,6 +8,9 @@ export default mergeConfig(
       environment: "jsdom",
       globals: true,
       setupFiles: "./src/__tests__/setup.tsx",
+      coverage: {
+        include: ["src/**/*.{ts,tsx}"],
+      },
     },
   }),
 );

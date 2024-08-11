@@ -1,4 +1,3 @@
-import { BrowserRouter } from "react-router-dom";
 import { describe, it, expect, vi } from "vitest";
 import { setup, screen } from "../__tests__/setup";
 import { characters } from "../__tests__/mocks/starWarsAPI";
@@ -16,12 +15,7 @@ describe("Flyout", () => {
     vi.restoreAllMocks();
   });
 
-  const renderResults = () =>
-    setup(
-      <BrowserRouter>
-        <Results results={characters} />
-      </BrowserRouter>,
-    );
+  const renderResults = () => setup(<Results results={characters} />);
 
   it("does not render when no items are selected", () => {
     renderResults();

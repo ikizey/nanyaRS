@@ -1,20 +1,26 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useRouter } from "next/router";
+
+function getCurrentQuery(location: string): string {
+  return location.includes("?")
+    ? location.substring(location.indexOf("?"))
+    : "";
+}
 
 export default function useDetails() {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
+  const location = router.asPath;
 
-  const isDetailsPanelOpen = location.pathname.startsWith("/details");
+  const isDetailsPanelOpen = location.startsWith("/details");
 
-  function openDetails(characterId?: string) {
-    if (characterId) {
-      navigate(`/details/${characterId}/${location.search}`);
-    }
+  function openDetails(newCharacterId: string) {
+    const currentQuery = getCurrentQuery(location);
+    router.push(`/details/${newCharacterId}${currentQuery}`);
   }
 
   function closeDetails() {
     if (isDetailsPanelOpen) {
-      navigate(`/${location.search}`);
+      const currentQuery = getCurrentQuery(location);
+      router.push(`/${currentQuery}`);
     }
   }
 
