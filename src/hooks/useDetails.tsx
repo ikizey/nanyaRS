@@ -1,26 +1,21 @@
-import { useRouter } from "next/router";
+"use client";
 
-function getCurrentQuery(location: string): string {
-  return location.includes("?")
-    ? location.substring(location.indexOf("?"))
-    : "";
-}
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function useDetails() {
   const router = useRouter();
-  const location = router.asPath;
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-  const isDetailsPanelOpen = location.startsWith("/details");
+  const isDetailsPanelOpen = pathname.startsWith("/details");
 
   function openDetails(newCharacterId: string) {
-    const currentQuery = getCurrentQuery(location);
-    router.push(`/details/${newCharacterId}${currentQuery}`);
+    router.push(`/details/${newCharacterId}?${searchParams}`);
   }
 
   function closeDetails() {
     if (isDetailsPanelOpen) {
-      const currentQuery = getCurrentQuery(location);
-      router.push(`/${currentQuery}`);
+      router.push(`/?${searchParams}`);
     }
   }
 

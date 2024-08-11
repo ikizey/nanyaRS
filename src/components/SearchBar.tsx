@@ -1,3 +1,5 @@
+"use client";
+
 import useDetails from "../hooks/useDetails";
 import Loading from "./Loading";
 import Pagination from "./Pagination";

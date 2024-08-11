@@ -1,5 +1,7 @@
+"use client";
+
 import { useState, useCallback, ChangeEvent, useEffect } from "react";
-import { useRouter } from "next/router";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 
 export default function useSearchTerm() {
   const LSSearchKeyName = "searchTermRS";
@@ -19,10 +21,9 @@ export default function useSearchTerm() {
   }, []);
 
   const router = useRouter();
-  const query = router.query as Record<string, string>;
-  const urlSearchParams = new URLSearchParams(query);
-  const searchQuery = urlSearchParams.get("search") || "";
-  const pathname = router.pathname;
+  const searchParams = useSearchParams(); // Get search params from next/navigation
+  const pathname = usePathname(); // Get pathname from next/navigation
+  const searchQuery = searchParams.get("search") || "";
 
   function setOnChange(event: ChangeEvent<HTMLInputElement>) {
     setSearchTerm(event.target.value.trim());
@@ -30,7 +31,9 @@ export default function useSearchTerm() {
 
   function search() {
     saveSearchTerm(searchTerm);
-    router.push(`${pathname}?search=${searchTerm}`);
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+    newSearchParams.set("search", searchTerm);
+    router.push(`${pathname}?${newSearchParams.toString()}`);
   }
 
   useEffect(() => {

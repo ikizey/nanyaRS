@@ -8,7 +8,20 @@ import AllProviders from "../components/AllProviders";
 
 expect.extend(matchers);
 
-vi.mock("next/router", () => vi.importActual("next-router-mock"));
+vi.mock("next/navigation", () => ({
+  useRouter: () => ({
+    push: vi.fn(),
+    replace: vi.fn(),
+    back: vi.fn(),
+    prefetch: vi.fn().mockResolvedValue(undefined),
+    refresh: vi.fn(),
+  }),
+  usePathname: () => "/mock-path",
+  useSearchParams: () => ({
+    get: vi.fn().mockReturnValue(null),
+    set: vi.fn(),
+  }),
+}));
 
 afterEach(() => {
   server.resetHandlers();

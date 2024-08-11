@@ -1,5 +1,5 @@
 import NotFound from "../components/NotFound";
 
-export default function Custom404Page() {
+export default function NotFoundPage() {
   return <NotFound />;
 }

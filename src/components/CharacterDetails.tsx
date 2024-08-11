@@ -1,3 +1,5 @@
+"use client";
+
 import getDetails from "../lib/character/getDetails";
 import useDetails from "../hooks/useDetails";
 import { Character } from "../types/character";

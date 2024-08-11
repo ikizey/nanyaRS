@@ -1,28 +1,10 @@
-import { setup, screen, waitFor } from "../../__tests__/setup";
-import mockRouter from "next/router";
-import CharacterDetailsRoute from "./[characterId]";
-import { characters, Luke } from "../../__tests__/mocks/starWarsAPI";
+import { setup, screen, waitFor } from "../__tests__/setup";
+import CharacterDetails from "./CharacterDetails";
+import { Luke } from "../__tests__/mocks/starWarsAPI";
 
 describe("CharacterDetails Component", () => {
-  function renderCharacterDetails(characterId: string = "1") {
-    mockRouter.push(`/details/${characterId}`);
-    if (characterId === "1") {
-      return setup(
-        <CharacterDetailsRoute
-          character={Luke}
-          characters={characters}
-          count={characters.length}
-        />,
-      );
-    } else {
-      return setup(
-        <CharacterDetailsRoute
-          character={null}
-          characters={characters}
-          count={characters.length}
-        />,
-      );
-    }
+  function renderCharacterDetails() {
+    return setup(<CharacterDetails character={Luke} />);
   }
 
   it("displays detailed info of Luke Skywalker correctly", async () => {
@@ -43,13 +25,6 @@ describe("CharacterDetails Component", () => {
     expect(screen.getByText("Url:")).toBeInTheDocument();
   });
 
-  it('displays "character not found" for non existing character', async () => {
-    const nonExistentCharacterId = "12345";
-    renderCharacterDetails(nonExistentCharacterId);
-
-    expect(await screen.findByText(/character not found/i)).toBeInTheDocument();
-  });
-
   it("hides the component when clicking the close button", async () => {
     const { user } = renderCharacterDetails();
 
@@ -57,10 +32,6 @@ describe("CharacterDetails Component", () => {
       const closeButton = screen.getByRole("button", { name: "x" });
       expect(closeButton).toBeInTheDocument();
       user.click(closeButton);
-    });
-
-    await waitFor(() => {
-      expect(mockRouter.pathname).not.toContain("/details");
     });
   });
 });

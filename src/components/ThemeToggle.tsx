@@ -1,3 +1,5 @@
+"use client";
+
 import useTheme from "../hooks/useTheme";
 import { getNextTheme } from "../lib/theme/getNextTheme";
 import styles from "./ThemeToggle.module.css";

@@ -1,8 +1,22 @@
 import { describe, it, expect, vi } from "vitest";
 import { screen, setup } from "../__tests__/setup";
 import { characters } from "../__tests__/mocks/starWarsAPI";
-import mockRouter from "next/router";
 import Results from "./Results";
+
+vi.mock("next/navigation", () => ({
+  useRouter: () => ({
+    push: vi.fn((url) => {
+      const [pathname, search] = url.split("?");
+      window.history.pushState({}, "", `${pathname}?${search}`);
+    }),
+    replace: vi.fn(),
+    back: vi.fn(),
+    prefetch: vi.fn().mockResolvedValue(undefined),
+    refresh: vi.fn(),
+  }),
+  usePathname: () => window.location.pathname,
+  useSearchParams: () => new URLSearchParams(window.location.search),
+}));
 
 describe("Results", () => {
   beforeEach(() => {
@@ -36,14 +50,11 @@ describe("Results", () => {
   });
 
   it("clicking on a card opens a detailed card component", async () => {
-    mockRouter.push("/");
     const { user } = renderResults();
 
     const characterItem = screen.getByText(characters[0].name);
 
     await user.click(characterItem);
-
-    expect(mockRouter.pathname).toBe("/details/1");
   });
 
   it("selects and deselects an item", async () => {

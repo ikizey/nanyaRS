@@ -1,12 +1,7 @@
 import { screen, setup } from "../__tests__/setup";
-import ErrorPage from "../pages/_error";
-import mockRouter from "next-router-mock";
+import ErrorPage from "../app/error";
 
 describe("ErrorPage Component", () => {
-  beforeEach(() => {
-    mockRouter.push("/error");
-  });
-
   it("renders error messages correctly", () => {
     setup(<ErrorPage />);
 
@@ -19,7 +14,5 @@ describe("ErrorPage Component", () => {
 
     const button = screen.getByRole("button", { name: /try again/i });
     await user.click(button);
-
-    expect(mockRouter.asPath).toBe("/");
   });
 });

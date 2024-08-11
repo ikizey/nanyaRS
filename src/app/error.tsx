@@ -1,4 +1,7 @@
-import { useRouter } from "next/router";
+"use client";
+
+import { useRouter } from "next/navigation";
+import React from "react";
 import styles from "./error.module.css";
 
 export default function ErrorPage() {

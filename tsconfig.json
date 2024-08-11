@@ -25,7 +25,8 @@
     "./src",
     "./dist/types/**/*.ts",
     "./next-env.d.ts",
-    "next.config.mjs"
+    "next.config.mjs",
+    "app"
   ],
   "exclude": ["./node_modules"]
 }
