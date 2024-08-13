@@ -1,7 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+export type Gender = "male" | "female";
+
 export interface FormInputData {
   name: string;
+  age: number;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  gender: Gender;
+  termsAccepted: boolean;
 }
 
 export interface FormState {
