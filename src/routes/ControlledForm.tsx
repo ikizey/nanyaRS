@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { addFormData, FormInputData, Gender } from "../store/formSlice";
 import { readFile } from "../lib/readFile";
 import Preview from "../components/Preview";
-import CountryField from "../components/CountryField";
+import CountryInput from "../components/CountryInput";
 
 export interface RawFormInputData {
   name: string;
@@ -106,10 +106,10 @@ export default function ControlledForm() {
             {...register("file")}
           />
         </div>
-        <CountryField
-          inputProps={register("country")}
-          setFormValue={(country) => setValue("country", country)}
-        />
+        <div style={{ position: "relative", display: "flex" }}>
+          <label htmlFor="country">Country:</label>
+          <CountryInput onChange={(country) => setValue("country", country)} />
+        </div>
         <button type="submit">Submit</button>
       </form>
       <Preview />

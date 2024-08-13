@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { addFormData, FormInputData, Gender } from "../store/formSlice";
 import { readFile } from "../lib/readFile";
 import Preview from "../components/Preview";
-import CountryField from "../components/CountryField";
+import CountryInput from "../components/CountryInput";
 
 export async function convertFormData(data: FormData) {
   const rawName = data.get("name") as string;
@@ -109,7 +109,10 @@ export default function UnControlledForm() {
             accept="image/png, image/jpeg"
           />
         </div>
-        <CountryField />
+        <div style={{ position: "relative", display: "flex" }}>
+          <label htmlFor="country">Country:</label>
+          <CountryInput />
+        </div>
         <button type="submit">Submit</button>
       </form>
       <Preview />
