@@ -11,6 +11,7 @@ export interface FormInputData {
   gender: Gender;
   termsAccepted: boolean;
   imageBase64?: string;
+  country: string;
 }
 
 export interface FormState {
