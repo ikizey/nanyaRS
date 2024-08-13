@@ -32,13 +32,14 @@ export default function Preview() {
         <p>
           <strong>Confirm Password:</strong> {data.confirmPassword}
         </p>
-        {data.imageBase64 && (
-          <div>
-            <strong>Uploaded Image:</strong>
-            <br />
-            <img src={data.imageBase64} alt="" />
-          </div>
-        )}
+        <p>
+          <strong>Uploaded Image:</strong>
+          <br />
+          <img src={data.imageBase64} alt="" />
+        </p>
+        <p>
+          <strong>Country</strong> {data.country}
+        </p>
       </div>
     </div>
   );

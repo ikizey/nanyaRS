@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { addFormData, FormInputData, Gender } from "../store/formSlice";
 import { readFile } from "../lib/readFile";
 import Preview from "../components/Preview";
+import CountryField from "../components/CountryField";
 
 export async function convertFormData(data: FormData) {
   const rawName = data.get("name") as string;
@@ -29,6 +30,9 @@ export async function convertFormData(data: FormData) {
   const rawFile = data.get("file") as File;
   const imageBase64 = await readFile(rawFile);
 
+  const rawCountry = data.get("country") as string;
+  const country = rawCountry;
+
   const formData: FormInputData = {
     name,
     age,
@@ -38,6 +42,7 @@ export async function convertFormData(data: FormData) {
     gender,
     termsAccepted,
     imageBase64,
+    country,
   };
   return formData;
 }
@@ -104,6 +109,7 @@ export default function UnControlledForm() {
             accept="image/png, image/jpeg"
           />
         </div>
+        <CountryField />
         <button type="submit">Submit</button>
       </form>
       <Preview />

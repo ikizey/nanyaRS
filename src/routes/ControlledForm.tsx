@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { addFormData, FormInputData, Gender } from "../store/formSlice";
 import { readFile } from "../lib/readFile";
 import Preview from "../components/Preview";
+import CountryField from "../components/CountryField";
 
 export interface RawFormInputData {
   name: string;
@@ -13,10 +14,11 @@ export interface RawFormInputData {
   gender: Gender;
   termsAccepted: boolean;
   file: File[];
+  country: string;
 }
 
 export default function ControlledForm() {
-  const { register, handleSubmit } = useForm<RawFormInputData>();
+  const { register, handleSubmit, setValue } = useForm<RawFormInputData>();
   const dispatch = useDispatch();
 
   async function onSubmit(data: RawFormInputData) {
@@ -34,6 +36,7 @@ export default function ControlledForm() {
       gender: data.gender,
       termsAccepted: data.termsAccepted,
       imageBase64,
+      country: data.country,
     };
 
     dispatch(addFormData(finalData));
@@ -103,6 +106,10 @@ export default function ControlledForm() {
             {...register("file")}
           />
         </div>
+        <CountryField
+          inputProps={register("country")}
+          setFormValue={(country) => setValue("country", country)}
+        />
         <button type="submit">Submit</button>
       </form>
       <Preview />
