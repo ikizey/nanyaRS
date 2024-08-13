@@ -10,14 +10,15 @@ export interface FormInputData {
   confirmPassword: string;
   gender: Gender;
   termsAccepted: boolean;
+  imageBase64?: string;
 }
 
 export interface FormState {
-  formData: FormInputData[];
+  formData?: FormInputData;
 }
 
 const initialState: FormState = {
-  formData: [],
+  formData: undefined,
 };
 
 const formSlice = createSlice({
@@ -25,7 +26,7 @@ const formSlice = createSlice({
   initialState,
   reducers: {
     addFormData(state, action: PayloadAction<FormInputData>) {
-      state.formData.push(action.payload);
+      state.formData = action.payload;
     },
   },
 });
