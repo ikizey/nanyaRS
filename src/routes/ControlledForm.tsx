@@ -24,9 +24,10 @@ export default function ControlledForm() {
     register,
     handleSubmit,
     setValue,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({
     resolver: yupResolver(validationSchema),
+    mode: "onChange",
   });
   const dispatch = useDispatch();
 
@@ -134,7 +135,9 @@ export default function ControlledForm() {
           <CountryInput onChange={(country) => setValue("country", country)} />
           {errors.country && <p>{errors.country.message}</p>}
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit" disabled={!isValid}>
+          Submit
+        </button>
       </form>
       <Preview />
     </>

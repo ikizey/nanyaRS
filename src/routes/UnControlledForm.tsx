@@ -70,6 +70,7 @@ export default function UnControlledForm() {
   const dispatch = useDispatch();
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [files, setFiles] = useState<FileList | undefined>();
+  const [isValid, setIsValid] = useState(false);
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
@@ -81,12 +82,14 @@ export default function UnControlledForm() {
       const data = await convertData(validated);
 
       setErrors({});
+      setIsValid(true);
       dispatch(addFormData(data));
     } catch (validationErrors) {
       const formattedErrors = formatValidationErrors(
         validationErrors as ValidationErrors,
       );
       setErrors(formattedErrors);
+      setIsValid(false);
     }
   }
 
@@ -97,9 +100,13 @@ export default function UnControlledForm() {
     }
   }
 
+  function handleFormChange() {
+    setIsValid(true);
+  }
+
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} onChange={handleFormChange}>
         <h2>Uncontrolled form</h2>
         <div>
           <label htmlFor="name">Name:</label>
@@ -165,7 +172,9 @@ export default function UnControlledForm() {
           </div>
           {errors.country && <p>{errors.country}</p>}
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit" disabled={!isValid}>
+          Submit
+        </button>
       </form>
       <Preview />
     </>
