@@ -145,9 +145,11 @@ export default function ControlledForm() {
           {errors.file && <p>{errors.file.message}</p>}
         </ErrorMessage>
       </div>
-      <div style={{ position: "relative", display: "flex" }}>
-        <label htmlFor="country">Country:</label>
-        <CountryInput onChange={(country) => setValue("country", country)} />
+      <div>
+        <div style={{ position: "relative", display: "flex" }}>
+          <label htmlFor="country">Country:</label>
+          <CountryInput onChange={(country) => setValue("country", country)} />
+        </div>
         <ErrorMessage>
           {errors.country && <p>{errors.country.message}</p>}
         </ErrorMessage>
