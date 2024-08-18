@@ -1,0 +1,24 @@
+.options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-width: 300px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 10;
+}
+
+.optionItem {
+  padding: 4px;
+  cursor: pointer;
+}
+
+.optionItem:hover {
+  background-color: #eee;
+}
