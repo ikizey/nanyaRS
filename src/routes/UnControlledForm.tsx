@@ -72,7 +72,7 @@ export default function UnControlledForm() {
   const navigate = useNavigate();
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [files, setFiles] = useState<FileList | undefined>();
-  const [isValid, setIsValid] = useState(false);
+  const [isChanged, setIsChanged] = useState(false);
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
@@ -84,7 +84,7 @@ export default function UnControlledForm() {
       const data = await convertData(validated);
 
       setErrors({});
-      setIsValid(true);
+      setIsChanged(true);
       dispatch(addFormData(data));
 
       navigate("/");
@@ -93,7 +93,7 @@ export default function UnControlledForm() {
         validationErrors as ValidationErrors,
       );
       setErrors(formattedErrors);
-      setIsValid(false);
+      setIsChanged(false);
     }
   }
 
@@ -105,7 +105,7 @@ export default function UnControlledForm() {
   }
 
   function handleFormChange() {
-    setIsValid(true);
+    setIsChanged(true);
   }
 
   return (
@@ -175,11 +175,11 @@ export default function UnControlledForm() {
       <div>
         <div style={{ position: "relative", display: "flex" }}>
           <label htmlFor="country">Country:</label>
-          <CountryInput />
+          <CountryInput onChange={handleFormChange} />
         </div>
         <ErrorMessage>{errors.country && <p>{errors.country}</p>}</ErrorMessage>
       </div>
-      <button type="submit" disabled={!isValid}>
+      <button type="submit" disabled={!isChanged}>
         Submit
       </button>
     </form>

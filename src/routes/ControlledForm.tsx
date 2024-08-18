@@ -25,10 +25,11 @@ export default function ControlledForm() {
     register,
     handleSubmit,
     setValue,
+    trigger,
     formState: { errors, isValid },
   } = useForm({
     resolver: yupResolver(validationSchema),
-    mode: "onChange",
+    mode: "onBlur",
   });
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -148,7 +149,12 @@ export default function ControlledForm() {
       <div>
         <div style={{ position: "relative", display: "flex" }}>
           <label htmlFor="country">Country:</label>
-          <CountryInput onChange={(country) => setValue("country", country)} />
+          <CountryInput
+            onChange={(country) => {
+              setValue("country", country);
+              trigger("country");
+            }}
+          />
         </div>
         <ErrorMessage>
           {errors.country && <p>{errors.country.message}</p>}
