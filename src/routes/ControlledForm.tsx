@@ -6,6 +6,7 @@ import { readFile } from "../lib/readFile";
 import Preview from "../components/Preview";
 import CountryInput from "../components/CountryInput";
 import validationSchema from "../lib/validations";
+import ErrorMessage from "../components/ErrorMessage";
 
 export interface RawFormInputData {
   name: string;
@@ -59,7 +60,9 @@ export default function ControlledForm() {
         <div>
           <label htmlFor="name">Name:</label>
           <input id="name" {...register("name")} />
-          {errors.name && <p>{errors.name.message}</p>}
+          <ErrorMessage>
+            {errors.name && <p>{errors.name.message}</p>}
+          </ErrorMessage>
         </div>
         <div>
           <label htmlFor="age">Age:</label>
@@ -69,17 +72,23 @@ export default function ControlledForm() {
             type="number"
             min="0"
           />
-          {errors.age && <p>{errors.age.message}</p>}
+          <ErrorMessage>
+            {errors.age && <p>{errors.age.message}</p>}
+          </ErrorMessage>
         </div>
         <div>
           <label htmlFor="email">Email:</label>
           <input id="email" {...register("email")} type="email" />
-          {errors.email && <p>{errors.email.message}</p>}
+          <ErrorMessage>
+            {errors.email && <p>{errors.email.message}</p>}
+          </ErrorMessage>
         </div>
         <div>
           <label htmlFor="password">Password:</label>
           <input id="password" {...register("password")} type="password" />
-          {errors.password && <p>{errors.password.message}</p>}
+          <ErrorMessage>
+            {errors.password && <p>{errors.password.message}</p>}
+          </ErrorMessage>
         </div>
         <div>
           <label htmlFor="confirmPassword">Confirm Password:</label>
@@ -88,7 +97,9 @@ export default function ControlledForm() {
             {...register("confirmPassword")}
             type="password"
           />
-          {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
+          <ErrorMessage>
+            {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
+          </ErrorMessage>
         </div>
         <div>
           <label>Gender:</label>
@@ -107,7 +118,9 @@ export default function ControlledForm() {
             value="female"
           />
           <label htmlFor="female">Female</label>
-          {errors.gender && <p>{errors.gender.message}</p>}
+          <ErrorMessage>
+            {errors.gender && <p>{errors.gender.message}</p>}
+          </ErrorMessage>
         </div>
         <div>
           <input
@@ -118,7 +131,9 @@ export default function ControlledForm() {
           <label htmlFor="termsAccepted">
             I accept the Terms and Conditions
           </label>
-          {errors.termsAccepted && <p>{errors.termsAccepted.message}</p>}
+          <ErrorMessage>
+            {errors.termsAccepted && <p>{errors.termsAccepted.message}</p>}
+          </ErrorMessage>
         </div>
         <div>
           <label htmlFor="file">Upload Picture:</label>
@@ -128,12 +143,16 @@ export default function ControlledForm() {
             accept="image/png, image/jpeg"
             {...register("file")}
           />
-          {errors.file && <p>{errors.file.message}</p>}
+          <ErrorMessage>
+            {errors.file && <p>{errors.file.message}</p>}
+          </ErrorMessage>
         </div>
         <div style={{ position: "relative", display: "flex" }}>
           <label htmlFor="country">Country:</label>
           <CountryInput onChange={(country) => setValue("country", country)} />
-          {errors.country && <p>{errors.country.message}</p>}
+          <ErrorMessage>
+            {errors.country && <p>{errors.country.message}</p>}
+          </ErrorMessage>
         </div>
         <button type="submit" disabled={!isValid}>
           Submit

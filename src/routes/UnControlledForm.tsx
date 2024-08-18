@@ -5,6 +5,7 @@ import { readFile } from "../lib/readFile";
 import Preview from "../components/Preview";
 import CountryInput from "../components/CountryInput";
 import validationSchema from "../lib/validations";
+import ErrorMessage from "../components/ErrorMessage";
 
 export interface RawFormInputData {
   name: string;
@@ -111,27 +112,31 @@ export default function UnControlledForm() {
         <div>
           <label htmlFor="name">Name:</label>
           <input id="name" name="name" type="text" />
-          {errors.name && <p>{errors.name}</p>}
+          <ErrorMessage>{errors.name && <p>{errors.name}</p>}</ErrorMessage>
         </div>
         <div>
           <label htmlFor="age">Age:</label>
-          <input id="age" name="age" type="number" min="0" />
-          {errors.age && <p>{errors.age}</p>}
+          <input id="age" name="age" type="number" min="1" />
+          <ErrorMessage>{errors.age && <p>{errors.age}</p>}</ErrorMessage>
         </div>
         <div>
           <label htmlFor="email">Email:</label>
           <input id="email" name="email" type="email" />
-          {errors.email && <p>{errors.email}</p>}
+          <ErrorMessage>{errors.email && <p>{errors.email}</p>}</ErrorMessage>
         </div>
         <div>
           <label htmlFor="password">Password:</label>
           <input id="password" name="password" type="password" />
-          {errors.password && <p>{errors.password}</p>}
+          <ErrorMessage>
+            {errors.password && <p>{errors.password}</p>}
+          </ErrorMessage>
         </div>
         <div>
           <label htmlFor="confirmPassword">Confirm Password:</label>
           <input id="confirmPassword" name="confirmPassword" type="password" />
-          {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
+          <ErrorMessage>
+            {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
+          </ErrorMessage>
         </div>
         <div>
           <label>Gender:</label>
@@ -145,14 +150,16 @@ export default function UnControlledForm() {
           <label htmlFor="male">Male</label>
           <input id="female" name="gender" type="radio" value="female" />
           <label htmlFor="female">Female</label>
-          {errors.gender && <p>{errors.gender}</p>}
+          <ErrorMessage>{errors.gender && <p>{errors.gender}</p>}</ErrorMessage>
         </div>
         <div>
           <input id="termsAccepted" name="termsAccepted" type="checkbox" />
           <label htmlFor="termsAccepted">
             I accept the Terms and Conditions
           </label>
-          {errors.termsAccepted && <p>{errors.termsAccepted}</p>}
+          <ErrorMessage>
+            {errors.termsAccepted && <p>{errors.termsAccepted}</p>}
+          </ErrorMessage>
         </div>
         <div>
           <label htmlFor="file">Upload Picture:</label>
@@ -163,14 +170,16 @@ export default function UnControlledForm() {
             accept="image/png, image/jpeg"
             onChange={handleFileChange}
           />
-          {errors.file && <p>{errors.file}</p>}
+          <ErrorMessage>{errors.file && <p>{errors.file}</p>}</ErrorMessage>
         </div>
         <div>
           <div style={{ position: "relative", display: "flex" }}>
             <label htmlFor="country">Country:</label>
             <CountryInput />
           </div>
-          {errors.country && <p>{errors.country}</p>}
+          <ErrorMessage>
+            {errors.country && <p>{errors.country}</p>}
+          </ErrorMessage>
         </div>
         <button type="submit" disabled={!isValid}>
           Submit
