@@ -8,10 +8,9 @@ import ErrorPage from "./ErrorPage";
 export default function Router() {
   return (
     <Routes>
-      <Route path="/" element={<Index />} errorElement={<ErrorPage />}>
-        <Route path="uncontrolled" element={<UnControlledForm />} />
-        <Route path="controlled" element={<ControlledForm />} />
-      </Route>
+      <Route path="/" element={<Index />} errorElement={<ErrorPage />} />
+      <Route path="/uncontrolled" element={<UnControlledForm />} />
+      <Route path="/controlled" element={<ControlledForm />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
